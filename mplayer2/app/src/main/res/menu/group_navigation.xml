@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/group_chat"
+        android:icon="@drawable/ic_people_outline_black_24dp"
+        android:title="@string/group_chat" />
+
+    <item
+        android:id="@+id/group_shop"
+        android:icon="@drawable/ic_shopping_basket_black_24dp"
+        android:title="@string/group_shop" />
+
+</menu>

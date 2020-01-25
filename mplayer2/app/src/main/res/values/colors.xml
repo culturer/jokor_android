@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="grey">#f5eeee</color>
+    <color name="grey_dark">#df565454</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="light_black">#1e1d1d</color>
+    <color name="red">#ef0505</color>
+    <color name="yellow">#feffaf54</color>
+    <color name="blue">#644fa2e1</color>
+    <color name="alpha">#00000000</color>
+
+
+    <color name="tool_bar">#ffffff</color>
+    <color name="tool_bar_text">#1e1d1d</color>
+
+    <color name="square_tab_selected">#303233</color>
+    <color name="square_tab_unselected">#A2A2A2</color>
+    <color name="colorProgressDefault">#FFD7D7D7</color>
+
+    <color name="sex_red">#d81e06</color>
+    <color name="sex_blue">#1296db</color>
+</resources>

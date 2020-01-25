@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/chat_stranges"
+        android:orderInCategory="100"
+        android:title="陌生人消息" />
+
+    <item
+        android:id="@+id/chat_group_tools"
+        android:orderInCategory="100"
+        android:title="群助手" />
+
+    <item
+        android:id="@+id/chat_undisturbing"
+        android:orderInCategory="100"
+        android:title="免打扰" />
+
+    <item
+        android:id="@+id/chat_srcret"
+        android:orderInCategory="100"
+        android:title="私密模式" />
+
+    <item
+        android:id="@+id/chat_AI"
+        android:orderInCategory="100"
+        android:title="AI秘书" />
+
+</menu>

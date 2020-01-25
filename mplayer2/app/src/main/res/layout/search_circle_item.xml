@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:layout_gravity="center"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_marginStart="6dp"
+        android:src="@drawable/fire"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:text="测试圈子名"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:id="@+id/username"
+        android:lines="1"
+        android:ellipsize="end"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

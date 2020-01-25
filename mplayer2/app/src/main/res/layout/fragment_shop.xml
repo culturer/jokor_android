@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".pages.main.main_page.chat.group_chat_page.shop_page.ShopFragment">
+
+    <com.cpoopc.scrollablelayoutlib.ScrollableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="1dp"
+                app:cardPreventCornerOverlap="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/bg_group_info"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--顶部轮播-->
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    app:indicator_margin="10dp" />
+            </androidx.cardview.widget.CardView>
+
+            <GridView
+                android:id="@+id/gridView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnWidth="90dp"
+                android:numColumns="auto_fit"
+                android:stretchMode="spacingWidthUniform"/>
+
+        </LinearLayout>
+
+        <!--标签-->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/shop_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:tabIndicatorColor="@color/grey"
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextColor="@color/grey_dark" />
+        <!--android:background="@mipmap/bg_tab1"-->
+
+        <!--页面切换-->
+        <androidx.viewpager.widget.ViewPager
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/shop_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.cpoopc.scrollablelayoutlib.ScrollableLayout>
+
+</FrameLayout>

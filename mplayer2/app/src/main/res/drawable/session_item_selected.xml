@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#bdbdbd">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <!-- 圆角的幅度 -->
+            <corners
+                android:radius="4dp" />
+            <!--内容颜色-->
+            <solid android:color="#f0f0f0" />
+        </shape>
+
+    </item>
+</ripple>
+
+    <!--<size-->
+    <!--android:width="20dp"-->
+    <!--android:height="20dp" />-->

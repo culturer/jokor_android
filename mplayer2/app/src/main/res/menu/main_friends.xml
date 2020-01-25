@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/add_friend"
+        android:orderInCategory="100"
+        android:title="添加好友" />
+
+    <item
+        android:id="@+id/black_friend"
+        android:orderInCategory="100"
+        android:title="黑名单" />
+
+    <item
+        android:id="@+id/create_group"
+        android:orderInCategory="100"
+        android:title="创建群" />
+
+    <item
+        android:id="@+id/search_group"
+        android:orderInCategory="100"
+        android:title="添加群" />
+</menu>

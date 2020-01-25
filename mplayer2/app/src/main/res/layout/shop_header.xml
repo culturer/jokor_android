@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"/>
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:numColumns="4" />
+
+    <EditText
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_circle1"
+        android:drawableStart="@drawable/ic_search_black_24dp"
+        android:hint="搜索"
+        android:padding="5dp"/>
+
+    <TextView
+        android:text="折扣"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/grey"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <RelativeLayout
+            android:layout_marginStart="6dp"
+            android:background="@color/white"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="3dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img1"
+                android:src="@mipmap/p1"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/name1"/>
+
+            <TextView
+                android:id="@+id/name1"
+                android:layout_above="@id/price1"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:text="奧迪Q2L2018款"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/price1"
+                android:text="￥ 23.6"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginEnd="6dp"
+            android:layout_marginTop="6dp"
+            android:background="@color/white"
+            android:layout_marginStart="3dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img2"
+                android:src="@mipmap/p1"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/name2"/>
+
+            <TextView
+                android:id="@+id/name2"
+                android:layout_above="@id/price2"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:text="奧迪Q2L2018款"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/price2"
+                android:text="￥ 23.6"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:text="预售"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/grey"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <RelativeLayout
+            android:layout_marginStart="6dp"
+            android:background="@color/white"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="3dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img3"
+                android:src="@mipmap/p1"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/name3"/>
+
+            <TextView
+                android:id="@+id/name3"
+                android:layout_above="@id/price3"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:text="奧迪Q2L2018款"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/price3"
+                android:text="￥ 23.6"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginEnd="6dp"
+            android:layout_marginTop="6dp"
+            android:background="@color/white"
+            android:layout_marginStart="3dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img4"
+                android:src="@mipmap/p1"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/name4"/>
+
+            <TextView
+                android:id="@+id/name4"
+                android:layout_above="@id/price4"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:text="奧迪Q2L2018款"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/price4"
+                android:text="￥ 23.6"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:text="拼团"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/grey"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <RelativeLayout
+            android:layout_marginStart="6dp"
+            android:background="@color/white"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="3dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img5"
+                android:src="@mipmap/p1"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/name5"/>
+
+            <TextView
+                android:id="@+id/name5"
+                android:layout_above="@id/price5"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:text="奧迪Q2L2018款"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/price5"
+                android:text="￥ 23.6"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginEnd="6dp"
+            android:layout_marginTop="6dp"
+            android:background="@color/white"
+            android:layout_marginStart="3dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img6"
+                android:src="@mipmap/p1"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/name6"/>
+
+            <TextView
+                android:id="@+id/name6"
+                android:layout_above="@id/price6"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:text="奧迪Q2L2018款"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/price6"
+                android:text="￥ 23.6"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

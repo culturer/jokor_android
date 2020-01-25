@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".pages.main.main_page.square.circle.search_circle.SearchCircleActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/app_bar_layout"
+            android:theme="@style/AppTheme.AppBarOverlay">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:background="@color/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/OverflowMenuStyle" >
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_circle1"
+                    app:searchHintIcon="@drawable/ic_search_black_24dp"
+                    app:queryHint="搜索"
+                    android:inputType="textFilter"
+                    android:imeOptions="actionSearch"
+                    app:iconifiedByDefault="false"
+                    android:focusableInTouchMode="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/rl_unsearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--搜索记录-->
+                <com.ihidea.multilinechooselib.MultiLineChooseLayout
+                    android:id="@+id/flowLayout"
+                    style="@style/FlowLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+                </com.ihidea.multilinechooselib.MultiLineChooseLayout>
+
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/close"
+                    android:src="@drawable/close"
+                    android:padding="5dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+            </RelativeLayout>
+
+            <!--内容推荐-->
+            <LinearLayout
+                android:id="@+id/recommends"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <FrameLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_marginStart="10dp"
+                            android:id="@+id/logo1"
+                            android:padding="3dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/time" />
+
+                        <TextView
+                            android:id="@+id/history1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/logo1"
+                            android:layout_toStartOf="@id/close1"
+                            android:layout_alignTop="@id/logo1"
+                            android:layout_alignBottom="@id/logo1"
+                            android:layout_marginStart="6dp"
+                            android:gravity="center_vertical"
+                            android:text="原生家庭的影响"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:layout_marginEnd="10dp"
+                            android:id="@+id/close1"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:padding="8dp"
+                            android:src="@drawable/close" />
+                        <View
+                            android:id="@+id/divider1"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="3dp"
+                            android:layout_below="@+id/history1"
+                            android:background="@color/grey"/>
+
+                        <ImageView
+                            android:layout_marginStart="10dp"
+                            android:id="@+id/logo2"
+                            android:padding="3dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_below="@+id/divider1"
+                            android:src="@drawable/time" />
+
+                        <TextView
+                            android:id="@+id/history2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/logo2"
+                            android:layout_toStartOf="@id/close2"
+                            android:layout_alignTop="@id/logo2"
+                            android:layout_alignBottom="@id/logo2"
+                            android:layout_marginStart="6dp"
+                            android:gravity="center_vertical"
+                            android:text="原生家庭的影响"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:layout_marginEnd="10dp"
+                            android:id="@+id/close2"
+                            android:layout_below="@id/divider1"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:padding="8dp"
+                            android:src="@drawable/close" />
+                        <View
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp"
+                            android:id="@+id/divider2"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="3dp"
+                            android:layout_below="@+id/history2"
+                            android:background="@color/grey"/>
+
+                        <TextView
+                            android:id="@+id/history"
+                            android:layout_below="@id/divider2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="全部搜索记录"
+                            android:textColor="@color/grey_dark"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+                    <ListView
+                        android:id="@+id/historys"
+                        android:visibility="gone"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </FrameLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:id="@+id/divider3"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/grey"/>
+
+                    <TextView
+                        android:id="@+id/label"
+                        android:layout_below="@id/divider3"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:text="圈子热搜"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_toEndOf="@+id/label"
+                        android:text="（搜索热点，小时更新）"
+                        android:textColor="@color/grey_dark"
+                        android:textSize="14sp"
+                        android:gravity="center_vertical"
+                        android:layout_alignTop="@+id/label"
+                        android:layout_alignBottom="@id/label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:id="@+id/fire_icon"
+                        android:padding="3dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/label"
+                        android:src="@drawable/fire"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:id="@+id/search_fire"
+                        android:layout_alignTop="@+id/fire_icon"
+                        android:layout_alignBottom="@+id/fire_icon"
+                        android:layout_toEndOf="@+id/fire_icon"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:text="总榜"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="3dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_toEndOf="@+id/search_fire"
+                        android:text="（953w人在搜）"
+                        android:textColor="@color/grey_dark"
+                        android:textSize="14sp"
+                        android:gravity="center_vertical"
+                        android:layout_alignTop="@+id/search_fire"
+                        android:layout_alignBottom="@id/search_fire"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.ihidea.multilinechooselib.MultiLineChooseLayout
+                        android:id="@+id/search_fire_content"
+                        android:layout_below="@+id/fire_icon"
+                        style="@style/FlowLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"/>
+
+                     <ImageView
+                        android:id="@+id/yule_icon"
+                        android:padding="3dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/search_fire_content"
+                        android:src="@drawable/fire"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:id="@+id/search_yule"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/yule_icon"
+                        android:layout_alignBottom="@+id/yule_icon"
+                        android:layout_marginStart="3dp"
+                        android:layout_toEndOf="@+id/yule_icon"
+                        android:gravity="center_vertical"
+                        android:text="游戏"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:layout_toEndOf="@+id/search_yule"
+                        android:text="（953w人在搜）"
+                        android:textColor="@color/grey_dark"
+                        android:textSize="14sp"
+                        android:gravity="center_vertical"
+                        android:layout_alignTop="@+id/search_yule"
+                        android:layout_alignBottom="@id/search_yule"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.ihidea.multilinechooselib.MultiLineChooseLayout
+                        android:id="@+id/search_yule_content"
+                        android:layout_below="@+id/yule_icon"
+                        style="@style/FlowLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"/>
+
+                    <ImageView
+                        android:id="@+id/tech_icon"
+                        android:padding="3dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/search_yule_content"
+                        android:src="@drawable/fire"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:id="@+id/search_tech"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/tech_icon"
+                        android:layout_alignBottom="@+id/tech_icon"
+                        android:layout_marginStart="3dp"
+                        android:layout_toEndOf="@+id/tech_icon"
+                        android:gravity="center_vertical"
+                        android:text="科技"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:layout_toEndOf="@+id/search_tech"
+                        android:text="（953w人在搜）"
+                        android:textColor="@color/grey_dark"
+                        android:textSize="14sp"
+                        android:gravity="center_vertical"
+                        android:layout_alignTop="@+id/search_tech"
+                        android:layout_alignBottom="@id/search_tech"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.ihidea.multilinechooselib.MultiLineChooseLayout
+                        android:id="@+id/search_tech_content"
+                        android:layout_below="@+id/tech_icon"
+                        style="@style/FlowLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"/>
+
+                    <ImageView
+                        android:id="@+id/live_icon"
+                        android:padding="3dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/search_tech_content"
+                        android:src="@drawable/fire"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                    android:id="@+id/search_live"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/live_icon"
+                    android:layout_alignBottom="@+id/live_icon"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@+id/live_icon"
+                    android:gravity="center_vertical"
+                    android:text="生活"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                    <TextView
+                        android:layout_toEndOf="@+id/search_live"
+                        android:text="（953w人在搜）"
+                        android:textColor="@color/grey_dark"
+                        android:textSize="14sp"
+                        android:gravity="center_vertical"
+                        android:layout_alignTop="@+id/search_live"
+                        android:layout_alignBottom="@id/search_live"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.ihidea.multilinechooselib.MultiLineChooseLayout
+                        android:id="@+id/search_live_content"
+                        android:layout_below="@+id/live_icon"
+                        style="@style/FlowLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+            <!--搜索结果-->
+            <LinearLayout
+                android:id="@+id/search_aricle_result"
+                android:visibility="gone"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/null_result"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="您搜索的圈子不存在，赶快搭建自己的小圈子吧！"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:id="@+id/icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/logo" />
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_toStartOf="@+id/focus"
+                        android:layout_toEndOf="@+id/icon"
+                        android:text="悠悠球俱乐部"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/name"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_toStartOf="@+id/focus"
+                        android:layout_toEndOf="@+id/icon"
+                        android:text="悠悠球俱乐部"
+                        android:textColor="@color/grey_dark"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/focus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5dp"
+                        android:padding="3dp"
+                        android:text="关注" />
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/search_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,149 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.jokor.base"
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 7
+        versionName "2.2"
+        testInstrumentationRunner "androidx.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            moduleName "app"
+            abiFilters 'armeabi-v7a'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+}
+
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // 支付宝 SDK AAR 包所需的配置
+    implementation(name: 'alipaySdk-15.5.7-20181023110930-noUtdid', ext: 'aar')
+
+    //http库
+    implementation 'com.kymjs.rxvolley:okhttp3:1.1.4'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+
+    //轮播图
+    implementation 'com.youth.banner:banner:1.4.10'
+
+    //折叠控件，解决了滚动冲突
+    implementation 'com.github.cpoopc:scrollablelayoutlib:1.0.1'
+
+    //播放器
+    implementation 'cn.jzvd:jiaozivideoplayer:7.1.0'
+    //视频缓存
+    implementation 'com.danikula:videocache:2.7.1'
+
+    //添加Gson依赖
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //友盟推送
+    implementation 'com.umeng.sdk:common:1.5.3'
+    implementation 'com.umeng.sdk:analytics:7.5.3'
+
+    //PushSDK必须依赖utdid库，所以需要加入对应依赖
+    implementation 'com.umeng.sdk:utdid:1.1.5.3'
+
+    //PushSDK
+    implementation 'com.umeng.sdk:push:4.2.0'
+
+
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1s.2.0
+//    implementation 'com.tencent.bugly:nativecrashreport:3.6.0'
+
+    //突破缓存大小限制webview
+    implementation 'ren.yale.android:cachewebviewlib:1.2.3'
+
+    //下拉刷新插件
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+
+    //没有使用特殊Header，可以不加这行
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
+
+    implementation 'com.race604.flyrefresh:library:2.0.0'
+    implementation 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
+
+    //添加EventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    debugImplementation "io.objectbox:objectbox-android-objectbrowser:$objectboxVersion"
+    releaseImplementation "io.objectbox:objectbox-android:$objectboxVersion"
+
+    //二维码
+    implementation 'cn.bertsir.zbarLibary:zbarlibary:1.1.9'
+
+    //相册
+    implementation 'com.yanzhenjie:album:2.1.3'
+
+    //动态授权
+    implementation 'com.yanzhenjie.permission:support:2.0.1'
+
+    //水波纹
+    implementation 'com.scwang.wave:MultiWaveHeader:1.0.0-alpha-1'
+
+    //图片剪裁
+    implementation 'com.github.yalantis:ucrop:2.2.2'
+
+    //mqtt
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
+    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+
+    //七牛云
+    implementation 'com.qiniu:qiniu-android-sdk:7.3.15'
+
+    //知乎图片选择
+    implementation 'com.zhihu.android:matisse:0.5.3-beta2'
+    //单击拍照，长按录像
+    implementation 'cjt.library.wheel:camera:1.1.9' //修复BUG
+
+    //列表控件
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
+
+    //屏幕适配
+    implementation 'me.jessyan:autosize:1.1.2'
+
+    //RecycleView分割线
+    implementation 'com.github.fondesa:recycler-view-divider:3.1.0'
+
+    //卡片翻页
+//    implementation 'com.github.mcxtzhang:ZLayoutManager:V1.1.0'
+    //进度条
+    implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
+    //流式布局，标签
+    implementation 'liji.library.dev:multilinechooselib:2.0.3'
+
+    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.android.material:material:1.0.0'
+
+}
+
+apply plugin: 'io.objectbox' // after applying Android plugin
+

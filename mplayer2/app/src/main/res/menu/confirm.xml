@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/add_friend"
+        android:orderInCategory="100"
+        android:title="添加朋友"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/add_group"
+        android:orderInCategory="100"
+        android:title="添加群"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/add_Relation"
+        android:orderInCategory="100"
+        android:title="添加亲戚"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/add_qr"
+        android:orderInCategory="100"
+        android:title="扫码添加"
+        app:showAsAction="never" />
+
+</menu>

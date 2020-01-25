@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jokor.base">
+    <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 用于写入缓存数据到扩展存储卡 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 外部存储读权限，调试工具加载本地补丁需要 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 短信操作权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" /> <!-- 系统提示框 -->
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 日志 -->
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- 录音权限 -->
+    <uses-permission android:name="android.permission.READ_PROFILE" /> <!-- Required to run keep-alive service when targeting API 28 or higher -->
+    <uses-permission android:name="android.permission. " />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:name=".base.BaseApplication"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/config"
+        android:roundIcon="@mipmap/logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:icon"
+        tools:targetApi="n">
+        <activity android:name=".pages.util.select_user.MulActivity"></activity>
+        <activity android:name=".pages.util.select_user.SingleSelectUserActivity" />
+        <activity
+            android:name=".pages.util.video.VideoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" /> <!-- android:screenOrientation="landscape" -->
+        <activity android:name=".pages.main.main_page.square.circle.circle_create.CreateCircleActivity" />
+        <activity
+            android:name=".pages.main.main_page.square.circle.CircleActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".pages.main.main_page.square.circle.search_circle.SearchCircleActivity" />
+        <activity android:name=".pages.util.article.ReplyActivity" />
+        <activity
+            android:name=".pages.util.floateditor.FloatEditorActivity"
+            android:theme="@style/NoTitleDialogTheme"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+        <activity android:name=".pages.util.article.CreateArticleActivity" />
+        <activity android:name=".pages.util.article.ArticleActivity" />
+
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/actions" />
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640" />
+
+        <activity android:name=".pages.util.SettingActivity" />
+        <activity android:name=".pages.main.main_page.chat.group_chat_page.shop_page.GoodsActivity" />
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" /> <!-- Channel ID用来标识App的推广渠道，作为推送消息时给用户分组的一个维度。 -->
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- MqttService -->
+        <activity
+            android:name=".pages.util.web.WebActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait" /> <!-- MqttService -->
+        <activity
+            android:name=".pages.util.PlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity android:name=".pages.login.LoginActivity" /> <!-- bugly版本更新 -->
+        <activity android:name=".pages.main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- bugly，Android N 兼容 -->
+        <activity android:name=".pages.main.main_page.chat.chat_page.ChatActivity" /> <!-- 图片剪裁 -->
+        <activity
+            android:name=".pages.login.RegisterActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".pages.util.userinfo.UserInfoActivity" />
+        <activity android:name=".pages.main.main_page.friends.ConfirmActivity" />
+        <activity android:name=".pages.main.main_page.search.SearchActivity" />
+        <activity
+            android:name=".pages.main.main_page.chat.group_chat_page.GroupsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".pages.main.main_page.group.CreateGroupActivity" />
+        <activity android:name=".pages.main.main_page.group.GroupInfoActivity" />
+        <activity android:name=".pages.main.main_page.main.shop.ShopActivity" />
+        <activity android:name=".pages.main.main_page.main.topic.TopicActivity" />
+        <activity android:name=".pages.main.main_page.main.smart.SmartActivity" />
+
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Client" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="f65799188a23c4af5cb1fdda740c6ecc" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"
+                tools:replace="android:resource" />
+        </provider>
+
+        <service
+            android:name=".im.MsgService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+    </application>
+
+</manifest>

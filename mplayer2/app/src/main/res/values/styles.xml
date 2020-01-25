@@ -1,0 +1,120 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--背景色-->
+        <item name="colorPrimary">@color/white</item>
+        <!--文字颜色-->
+        <item name="android:textColorPrimary">@color/black</item>
+        <!--按钮,checkbox选中颜色-->
+        <item name="colorAccent">@color/black</item>
+        <!--光标颜色-->
+        <item name="android:textCursorDrawable">@drawable/test_cursor</item>
+        <!--分割线颜色-->
+        <item name="android:listDivider">@color/grey</item>
+        <!--去掉标题栏-->
+        <item name="android:windowNoTitle">true</item>
+        <!--沉浸式状态栏-->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+
+        <!--透明启动背景-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+    </style>
+
+    <style name="StartTheme" parent="AppTheme">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@mipmap/start_bg</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <!--设置返回键颜色-->
+        <!--<item name="colorControlNormal">@color/white</item>-->
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="OverflowMenuStyle" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <!-- 是否覆盖锚点，默认为true，即盖住Toolbar -->
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+        <item name="android:paddingRight">0dp</item>
+        <!-- 弹出层背景颜色 -->
+        <item name="android:popupBackground">@color/black</item>
+        <item name="android:colorBackground">@color/grey_dark</item>
+
+        <!--<item name="android:background">@drawable/ic_menu_bg</item>-->
+        <!-- 弹出层垂直方向上的偏移，即在竖直方向上距离Toolbar的距离，值为负则会盖住Toolbar -->
+        <item name="android:dropDownVerticalOffset">-7dp</item>
+        <!-- 弹出层水平方向上的偏移，即距离屏幕左边的距离，负值会导致右边出现空隙 -->
+        <item name="android:dropDownHorizontalOffset">0dp</item>
+        <!-- 设置弹出菜单文字颜色 -->
+        <item name="android:textColor">@color/white</item>
+        <!--<item name="android:dropDownListViewStyle">@style/AppDropDownListViewStyle</item>-->
+
+
+    </style>
+
+
+    <style name="MyPopWindowAnim">
+        <item name="android:windowEnterAnimation">@anim/enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/out_anim</item>
+    </style>
+
+    <style name="NoTitleDialogTheme" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="FlowLayoutStyle">
+        <item name="item_backgroundColor">@color/white</item>
+        <item name="item_selectedBackgroundColor">@color/white</item>
+        <item name="item_horizontalSpacing">6dp</item>
+        <item name="item_verticalSpacing">3dp</item>
+        <item name="item_horizontalPadding">5dp</item>
+        <item name="item_verticalPadding">3dp</item>
+        <item name="item_textColor">@color/grey_dark</item>
+        <item name="item_selectedTextColor">@color/red</item>
+        <item name="item_textSize">14sp</item>
+        <item name="item_radius">3dp</item>
+        <item name="item_strokeColor">@color/grey</item>
+        <item name="item_selectedStrokeColor">@color/grey_dark</item>
+        <item name="item_multiChooseable">false</item>
+        <item name="item_singleLine">false</item>
+        <item name="item_click">true</item>
+        <item name="item_width">-2</item>
+        <item name="item_height">-2</item>
+        <item name="item_maxEms">10</item>
+    </style>
+
+    <style name="FlowLayoutStyleMul">
+        <item name="item_backgroundColor">@color/white</item>
+        <item name="item_selectedBackgroundColor">@color/white</item>
+        <item name="item_horizontalSpacing">6dp</item>
+        <item name="item_verticalSpacing">3dp</item>
+        <item name="item_horizontalPadding">5dp</item>
+        <item name="item_verticalPadding">3dp</item>
+        <item name="item_textColor">@color/grey_dark</item>
+        <item name="item_selectedTextColor">@color/red</item>
+        <item name="item_textSize">14sp</item>
+        <item name="item_radius">3dp</item>
+        <item name="item_strokeColor">@color/grey</item>
+        <item name="item_selectedStrokeColor">@color/grey_dark</item>
+        <item name="item_multiChooseable">true</item>
+        <item name="item_singleLine">false</item>
+        <item name="item_click">true</item>
+        <item name="item_width">-2</item>
+        <item name="item_height">-2</item>
+        <item name="item_maxEms">10</item>
+    </style>
+</resources>

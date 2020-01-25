@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BarChartView">
+        <attr name="barchartCount" format="integer" />
+        <attr name="barchartDuration" format="integer" />
+        <attr name="barchartShape" format="reference" />
+        <attr name="barchartHeight" format="dimension" />
+        <attr name="barchartWidth" format="dimension" />
+        <attr name="barcharMarginLeft" format="dimension" />
+        <attr name="barcharBackColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="StatusBarHeightView">
+        <attr name="use_type" format="integer">
+            <enum name="use_height" value="0" />
+            <enum name="use_padding_top" value="1" />
+        </attr>
+    </declare-styleable>
+
+</resources>

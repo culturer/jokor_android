@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="horizontal"
+    android:layout_marginBottom="10dp">
+
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:id="@+id/icon"
+        android:src="@mipmap/logo"
+        android:layout_alignParentStart="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:text="测试用户名"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:id="@+id/username"
+        android:lines="1"
+        android:layout_toEndOf="@+id/icon"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/time"
+        android:text="1天前"
+        android:textSize="12sp"
+        android:textColor="@color/grey_dark"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@+id/username"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_marginTop="6dp"
+        android:id="@+id/menu"
+        android:layout_gravity="end"
+        android:gravity="end"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/comment"
+        android:layout_marginEnd="6dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:padding="5dp"
+        android:src="@drawable/close" />
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_toEndOf="@+id/icon"
+        android:layout_below="@+id/username"
+        android:text="这是一条测试评论哈,这是一条测试评论哈,这是一条测试评论哈,这是一条测试评论哈,这是一条测试评论哈,这是一条测试评论哈,这是一条测试评论哈,这是一条测试评论哈,这是一条测试评论哈,这是一条测试评论哈"
+        android:letterSpacing="0.15"
+        android:padding="3dp"
+        android:layout_marginEnd="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textColor="@color/black"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/reply1"
+        android:text="回复1 "
+        android:layout_marginStart="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/grey_dark"
+        android:layout_toEndOf="@+id/icon"
+        android:layout_below="@+id/comment"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/reply2"
+        android:text="回复2 "
+        android:layout_marginStart="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/grey_dark"
+        android:layout_toEndOf="@+id/icon"
+        android:layout_below="@+id/reply1"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/reply3"
+        android:text="回复3 "
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/grey_dark"
+        android:layout_toEndOf="@+id/icon"
+        android:layout_below="@+id/reply2"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:id="@+id/time_count"
+        android:text="22条回复"
+        android:layout_centerHorizontal="true"
+        android:textSize="12sp"
+        android:textColor="@color/grey_dark"
+        android:layout_below="@+id/reply3"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/replay"
+        android:text="回复"
+        android:layout_marginBottom="3dp"
+        android:layout_below="@+id/reply3"
+        android:gravity="center_vertical"
+        android:layout_alignParentEnd="true"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginEnd="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/divider"
+        android:background="@color/grey"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/replay"
+        android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>
