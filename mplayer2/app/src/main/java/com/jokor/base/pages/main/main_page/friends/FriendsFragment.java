@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -81,6 +82,7 @@ public class FriendsFragment extends Fragment {
 		contentView = inflater.inflate(R.layout.fragment_friends, container, false);
 		initToolBar();
 		initSearch();
+		initNewFriends();
 		initList(new GetFriendBean());
 		initData();
 		EventBus.getDefault().register(this);
@@ -96,6 +98,11 @@ public class FriendsFragment extends Fragment {
 		((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(getActivity(), MainActivity.drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 		toggle.syncState();
+	}
+
+	private void initNewFriends(){
+		TextView new_friend = contentView.findViewById(R.id.new_friend);
+		new_friend.setOnClickListener(v -> startActivity(new Intent(getContext(),ConfirmActivity.class)));
 	}
 
 	@Override

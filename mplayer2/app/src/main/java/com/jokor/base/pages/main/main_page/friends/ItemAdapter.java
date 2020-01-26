@@ -69,9 +69,8 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
         itemViewHolder.icon.setBackground(drawable);
         RequestOptions options1 = new RequestOptions()
                 .error(R.mipmap.logo)//加载错误之后的错误图
-                .override(400,400)//指定图片的尺寸
                 .circleCrop()
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE);//只缓存最终的图片
+                .diskCacheStrategy(DiskCacheStrategy.ALL);//只缓存最终的图片
         if (data.getUserId() == Datas.getUserInfo().getId()){
             Log.i(TAG, "onBindViewHolder: mysend");
             Glide.with(context)
@@ -128,8 +127,7 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
                             R.menu.confirm_add,
                             item -> {
                                 switch (item.getItemId()){
-                                    case R.id.add:
-                                        FriendPresenter.getInstance().through(context,data,OPT_THROUGH,callback);
+                                    case R.id.add: FriendPresenter.getInstance().through(context,data,OPT_THROUGH,callback);
                                     case R.id.refuse:FriendPresenter.getInstance().through(context,data,OPT_REFUSE,callback);
                                     case R.id.ignore:FriendPresenter.getInstance().through(context,data,OPT_IGNORE,callback);
                                 }
@@ -144,7 +142,6 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
                 itemViewHolder.status.setOnClickListener(v -> {
                     ShowUtil.showToast(context,"您已经通过该好友的好友请求哦！");
                 });
-
                 break;
             case 2:
                 itemViewHolder.status.setImageResource(R.drawable.close);

@@ -4,7 +4,7 @@ package com.jokor.base.base;
 //服务器配置文件
 public class Urls {
 
-	public static String HOST_DATA = "http://192.168.1.105:10008";
+	public static String HOST_DATA = "http://192.168.1.11:10008";
 //	public static String HOST_DATA = "http://106.12.98.18:10005";
 
 	public static String QINIU_URL = "http://qiniu.jokor.vip/";

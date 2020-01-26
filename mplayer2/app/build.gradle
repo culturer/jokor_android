@@ -86,7 +86,7 @@ dependencies {
     //没有使用特殊Header，可以不加这行
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
 
-    implementation 'com.race604.flyrefresh:library:2.0.0'
+//    implementation 'com.race604.flyrefresh:library:2.0.0'
     implementation 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
 
     //添加EventBus

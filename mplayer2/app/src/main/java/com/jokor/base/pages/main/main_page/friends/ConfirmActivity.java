@@ -31,29 +31,19 @@ import com.jokor.base.util.base.SizeUtil;
 import com.jokor.base.util.base.ThreadUtil;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
-import com.race604.flyrefresh.FlyRefreshLayout;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-public class ConfirmActivity extends AppCompatActivity implements FlyRefreshLayout.OnPullRefreshListener {
+public class ConfirmActivity extends AppCompatActivity {
 
 	private static final String TAG = "ConfirmActivity";
 
 	MainPresenter presenter;
-
-	private FlyRefreshLayout mFlylayout;
 	private RecyclerView mListView;
-
 	private ItemAdapter mAdapter;
-
 	private View myView;
-
-	private Handler mHandler = new Handler();
-	private LinearLayoutManager mLayoutManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,27 +52,14 @@ public class ConfirmActivity extends AppCompatActivity implements FlyRefreshLayo
 		setContentView(myView);
 		initToolBar();
 		initData();
-
-		mFlylayout = findViewById(R.id.fly_layout);
-		mFlylayout.setOnPullRefreshListener(this);
-		mListView = findViewById(R.id.list);
-		mLayoutManager = new LinearLayoutManager(this);
-		mListView.setLayoutManager(mLayoutManager);
-		mListView.setItemAnimator(new SampleItemAnimator());
-
-		View actionButton = mFlylayout.getHeaderActionButton();
-		if (actionButton != null) {
-		    actionButton.setAlpha(0.1f);
-			actionButton.setOnClickListener(v -> mFlylayout.startRefresh());
-		}
-		EventBus.getDefault().register(this);
+		initList();
 	}
 
 	private void initData(){
 		HttpCallback callback = new HttpCallback() {
 			@Override
 			public void onSuccess(String t) {
-				Log.i(TAG, "onSuccess: "+t);
+				Log.i(TAG, "获取好友申请列表: "+t);
 				ApplyBean applyBean;
 				Gson gson = GsonUtil.getGson();
 				applyBean = gson.fromJson(t,ApplyBean.class);
@@ -104,14 +81,19 @@ public class ConfirmActivity extends AppCompatActivity implements FlyRefreshLayo
         toolbar.setNavigationOnClickListener(v -> finish());
 	}
 
+	private void initList(){
+		mListView = findViewById(R.id.list);
+		LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+		mListView.setLayoutManager(mLayoutManager);
+		mListView.setItemAnimator(new SampleItemAnimator());
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.confirm, menu);
 		return true;
 	}
 
-
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()){
@@ -163,26 +145,6 @@ public class ConfirmActivity extends AppCompatActivity implements FlyRefreshLayo
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
-	@Override
-	public void onRefresh(FlyRefreshLayout view) {
-		View child = mListView.getChildAt(0);
-		if (child != null) { bounceAnimateView(child.findViewById(R.id.icon)); }
-		mHandler.postDelayed(() -> mFlylayout.onRefreshFinish(), 2000);
-	}
-
-	private void bounceAnimateView(View view) {
-		if (view == null) {
-			return;
-		}
-		Animator swing = ObjectAnimator.ofFloat(view, "rotationX", 0, 30, -20, 0);
-		swing.setDuration(400);
-		swing.setInterpolator(new AccelerateInterpolator());
-		swing.start();
-	}
-
-	@Override
-	public void onRefreshAnimationEnd(FlyRefreshLayout view) { }
 
 	@Subscribe
 	public void update(ApplyEvent event){

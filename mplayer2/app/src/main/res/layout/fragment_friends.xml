@@ -45,11 +45,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:drawableStart="@drawable/ic_bubble_chart_black_24dp"
+        android:drawableStart="@drawable/ic_add_black_24dp"
         android:drawablePadding="10dp"
         android:gravity="center_vertical"
         android:padding="5dp"
-        android:text="好友推荐" />
+        android:text="新朋友"
+        android:textSize="16sp"
+        android:textColor="@color/tool_bar_text"/>
 
     <com.jokor.base.wedgit.iphone_treeview.IphoneTreeView
         android:id="@+id/friend_list"

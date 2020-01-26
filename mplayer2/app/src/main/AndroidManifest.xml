@@ -37,7 +37,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon"
         tools:targetApi="n">
-        <activity android:name=".pages.util.select_user.MulActivity"></activity>
+        <activity android:name=".pages.util.select_user.MulActivity"/>
         <activity android:name=".pages.util.select_user.SingleSelectUserActivity" />
         <activity
             android:name=".pages.util.video.VideoActivity"
