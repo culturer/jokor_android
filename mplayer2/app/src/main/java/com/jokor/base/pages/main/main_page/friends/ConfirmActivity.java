@@ -28,6 +28,7 @@ import com.jokor.base.presenter.MainPresenter;
 import com.jokor.base.pages.util.userinfo.UserInfoActivity;
 import com.jokor.base.util.base.GsonUtil;
 import com.jokor.base.util.base.SizeUtil;
+import com.jokor.base.util.base.StatusBarUtil;
 import com.jokor.base.util.base.ThreadUtil;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
@@ -74,11 +75,12 @@ public class ConfirmActivity extends AppCompatActivity {
 	private void initToolBar(){
 		LinearLayout container = findViewById(R.id.container);
 		container.setPadding(0, SizeUtil.getStatusBarHeight(this),0,0);
+		StatusBarUtil.setAndroidNativeLightStatusBar(this,true);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		toolbar.setTitle("");
-		toolbar.setNavigationIcon(R.drawable.ic_navigate_before_white_24dp);
 		setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(v -> finish());
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);//左侧添加一个默认的返回图标
+		getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
 	}
 
 	private void initList(){

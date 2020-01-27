@@ -12,6 +12,7 @@ public class Urls {
 	public static final String USER_PATH = "/user";
 	// user code
 	public static final int CODE_LOGIN = 0;
+	public static final int CODE_DEL_USER = 9;
 	public static final int CODE_ADD_USERLIST = 10;
 	public static final int CODE_GET_FRIEND = 11;
 	public static final int CODE_ADD_FRIEND = 12;

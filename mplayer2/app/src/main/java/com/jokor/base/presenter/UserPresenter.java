@@ -1,16 +1,23 @@
 package com.jokor.base.presenter;
 
+import android.util.Log;
+
 import com.jokor.base.base.Datas;
 import com.jokor.base.model.bean.UserBean;
+import com.jokor.base.util.pay.bean.PayResult;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 
+import static com.jokor.base.base.Urls.CODE_DEL_USER;
 import static com.jokor.base.base.Urls.CODE_GET_USERINFO;
 import static com.jokor.base.base.Urls.HOST_DATA;
 import static com.jokor.base.base.Urls.USER_PATH;
 
 public class UserPresenter {
+
+    private static final String TAG = "UserPresenter" ;
+
     private static final UserPresenter ourInstance = new UserPresenter();
 
     public static UserPresenter getInstance() {
@@ -40,6 +47,23 @@ public class UserPresenter {
         HttpParams params = new HttpParams();
         params.put("options",CODE_GET_USERINFO);
         params.put("userId",""+userId);
+        new RxVolley.Builder()
+                .url(HOST_DATA+USER_PATH)
+                .httpMethod(RxVolley.Method.POST) //default GET or POST/PUT/DELETE/HEAD/OPTIONS/TRACE/PATCH
+                .contentType(RxVolley.ContentType.FORM)//default FORM or JSON
+                .params(params)
+                .shouldCache(false) //default: get true, post false
+                .callback(callback)
+                .encoding("UTF-8") //default
+                .doTask();
+    }
+
+    public void deleteFriend(String tag,long friendId , HttpCallback callback){
+        Log.e(TAG, "deleteFriend: TAG --- "+tag );
+        HttpParams params = new HttpParams();
+        params.put("options",CODE_DEL_USER);
+        params.put("userId",""+Datas.getUserInfo().getId());
+        params.put("friendId",""+friendId);
         new RxVolley.Builder()
                 .url(HOST_DATA+USER_PATH)
                 .httpMethod(RxVolley.Method.POST) //default GET or POST/PUT/DELETE/HEAD/OPTIONS/TRACE/PATCH

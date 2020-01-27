@@ -45,15 +45,19 @@ import com.jokor.base.im.MsgEvent;
 import com.jokor.base.model.db.Msg;
 import com.jokor.base.model.db.Session;
 import com.jokor.base.presenter.ChatPresenter;
+import com.jokor.base.presenter.UserPresenter;
 import com.jokor.base.util.base.FileUtil;
 import com.jokor.base.util.audio.AudioRecoder;
 import com.jokor.base.util.base.GsonUtil;
 import com.jokor.base.util.base.SizeUtil;
 import com.jokor.base.util.base.SoftKeyBoardListener;
 import com.jokor.base.util.base.StatusBarUtil;
+import com.jokor.base.wedgit.util.ShowUtil;
 import com.jokor.base.wedgit.util.SoftHideKeyBoardUtil;
 import com.jokor.base.util.base.TimeUtil;
 import com.jokor.base.wedgit.BarChartView;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.VolleyError;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -66,6 +70,8 @@ import com.yanzhenjie.permission.runtime.Permission;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -522,8 +528,39 @@ public class ChatActivity extends AppCompatActivity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		this.finish();
-		return super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				finish();
+				break;
+			case R.id.delete:
+				HttpCallback callback = new HttpCallback() {
+					@Override
+					public void onSuccess(String t) {
+						Log.e(TAG, "删除好友 onSuccess: "+t );
+						try {
+							JSONObject jb = new JSONObject(t);
+							int status = jb.getInt("status");
+							if (status == 200){
+								ShowUtil.showToast(getApplicationContext(),"删除好友成功");
+								finish();
+							}else {
+								ShowUtil.showToast(ChatActivity.this,"删除好友失败");
+							}
+						} catch (JSONException e) {
+							ShowUtil.showToast(ChatActivity.this,"参数错误");
+							e.printStackTrace();
+						}
+					}
+
+					@Override
+					public void onFailure(VolleyError error) {
+						Log.e(TAG, "删除好友 onFailure: "+error.getMessage() );
+					}
+				};
+				Log.e(TAG, "onOptionsItemSelected: 删除好友" + GsonUtil.getGson().toJson(session) );
+				UserPresenter.getInstance().deleteFriend(TAG,session.getToId(),callback);
+		}
+		return true;
 	}
 
 	/**

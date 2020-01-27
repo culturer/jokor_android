@@ -1,6 +1,17 @@
 package com.jokor.base.model.bean;
 
 public class AppliesBean {
+
+    public static final int  StatusSend = 0 ;
+    public static final int  StatusAgree = 1 ;
+    public static final int  StatusRefuse = 2 ;
+    public static final int  StatusIgnore = 3 ;
+
+    public static final int  TypeRelations = 0 ;
+    public static final int  TypeFriends = 1 ;
+    public static final int  TypeGroups = 2 ;
+    public static final int  TypeHomes = 3 ;
+
     /**
      * Id : 1
      * Type : 1

@@ -137,6 +137,7 @@ public class FriendsFragment extends Fragment {
 		HttpCallback callback = new HttpCallback() {
 			@Override
 			public void onSuccess(String t) {
+				Log.e(TAG, "onSuccess: "+t );
 				Gson gson = GsonUtil.getGson();
 				GetFriendBean friendBean = gson.fromJson(t,GetFriendBean.class);
 				Datas.setFriendBean(friendBean);
