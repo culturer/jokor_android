@@ -21,6 +21,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
@@ -84,6 +86,7 @@ public class FriendsFragment extends Fragment {
 		initSearch();
 		initNewFriends();
 		initList(new GetFriendBean());
+		initList();
 		initData();
 		EventBus.getDefault().register(this);
 		return contentView;
@@ -92,7 +95,6 @@ public class FriendsFragment extends Fragment {
 	private void initToolBar(){
 		Toolbar toolbar = contentView.findViewById(R.id.toolbar);
 		toolbar.setTitle("");
-		toolbar.inflateMenu(R.menu.main_friends);
 		AppBarLayout app_bar_layout = contentView.findViewById(R.id.app_bar_layout);
 		app_bar_layout.setPadding(0, SizeUtil.getStatusBarHeight(getContext()),0,0);
 		((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -103,6 +105,13 @@ public class FriendsFragment extends Fragment {
 	private void initNewFriends(){
 		TextView new_friend = contentView.findViewById(R.id.new_friend);
 		new_friend.setOnClickListener(v -> startActivity(new Intent(getContext(),ConfirmActivity.class)));
+	}
+
+	private void initList(){
+		RecyclerView list = contentView.findViewById(R.id.list);
+		list.setLayoutManager(new LinearLayoutManager(getContext()));
+		NodeAdapter adapter = new NodeAdapter();
+		list.setAdapter(adapter);
 	}
 
 	@Override
@@ -184,10 +193,12 @@ public class FriendsFragment extends Fragment {
 	private void initList(GetFriendBean friendBean){
 		Log.i(TAG, "initList: 开始初始化好友列表！");
 		friend_list = contentView.findViewById(R.id.friend_list);
+
 		friend_list.setHeaderView(getLayoutInflater().inflate(R.layout.iphonetreeview_list_head_view, friend_list, false));
 		friend_list.setGroupIndicator(null);
 		//		初始化好友列表
 		adapter = new TreeViewAdapter(getContext(),this,friend_list, friendBean,Datas.getGroups());
+
 		friend_list.setAdapter(adapter);
 		friend_list.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 			@Override

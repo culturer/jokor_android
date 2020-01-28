@@ -123,7 +123,7 @@ dependencies {
     implementation 'cjt.library.wheel:camera:1.1.9' //修复BUG
 
     //列表控件
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.0-beta11'
 
     //屏幕适配
     implementation 'me.jessyan:autosize:1.1.2'

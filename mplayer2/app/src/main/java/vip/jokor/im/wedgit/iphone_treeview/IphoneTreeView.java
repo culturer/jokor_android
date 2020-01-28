@@ -130,9 +130,11 @@ public class IphoneTreeView extends ExpandableListView implements
 		} else {
 			this.expandGroup(groupPosition);
 			mAdapter.onHeadViewClick(groupPosition, 1);
-		}
 
+
+		}
 		this.setSelectedGroup(groupPosition);
+
 	}
 
 	private float mDownX;
