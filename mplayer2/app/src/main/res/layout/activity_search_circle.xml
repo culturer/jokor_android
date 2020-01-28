@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".pages.main.main_page.square.circle.search_circle.SearchCircleActivity">
+    tools:context="vip.jokor.im.pages.main.main_page.square.circle.search_circle.SearchCircleActivity">
 
     <LinearLayout
         android:orientation="vertical"

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.jokor.base.pages.main.main_page.square.circle.CircleActivity">
+    tools:context="com.jokor.base.vip.jokor.base.pages.main.main_page.square.circle.CircleActivity">
     <item
         android:id="@+id/action_create"
         android:orderInCategory="100"

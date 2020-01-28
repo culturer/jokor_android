@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.jokor.base">
+    package="vip.jokor.im">
     <!-- 用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
@@ -27,7 +27,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:name=".base.BaseApplication"
+        android:name="vip.jokor.im.base.BaseApplication"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/config"
@@ -37,24 +37,24 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon"
         tools:targetApi="n">
-        <activity android:name=".pages.util.select_user.MulActivity"/>
-        <activity android:name=".pages.util.select_user.SingleSelectUserActivity" />
+        <activity android:name="vip.jokor.im.pages.util.select_user.MulActivity"/>
+        <activity android:name="vip.jokor.im.pages.util.select_user.SingleSelectUserActivity" />
         <activity
-            android:name=".pages.util.video.VideoActivity"
+            android:name="vip.jokor.im.pages.util.video.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" /> <!-- android:screenOrientation="landscape" -->
-        <activity android:name=".pages.main.main_page.square.circle.circle_create.CreateCircleActivity" />
+        <activity android:name="vip.jokor.im.pages.main.main_page.square.circle.circle_create.CreateCircleActivity" />
         <activity
-            android:name=".pages.main.main_page.square.circle.CircleActivity"
+            android:name="vip.jokor.im.pages.main.main_page.square.circle.CircleActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".pages.main.main_page.square.circle.search_circle.SearchCircleActivity" />
-        <activity android:name=".pages.util.article.ReplyActivity" />
+        <activity android:name="vip.jokor.im.pages.main.main_page.square.circle.search_circle.SearchCircleActivity" />
+        <activity android:name="vip.jokor.im.pages.util.article.ReplyActivity" />
         <activity
-            android:name=".pages.util.floateditor.FloatEditorActivity"
+            android:name="vip.jokor.im.pages.util.floateditor.FloatEditorActivity"
             android:theme="@style/NoTitleDialogTheme"
             android:windowSoftInputMode="stateAlwaysVisible" />
-        <activity android:name=".pages.util.article.CreateArticleActivity" />
-        <activity android:name=".pages.util.article.ArticleActivity" />
+        <activity android:name="vip.jokor.im.pages.util.article.CreateArticleActivity" />
+        <activity android:name="vip.jokor.im.pages.util.article.ArticleActivity" />
 
         <meta-data
             android:name="com.google.android.actions"
@@ -66,8 +66,8 @@
             android:name="design_height_in_dp"
             android:value="640" />
 
-        <activity android:name=".pages.util.SettingActivity" />
-        <activity android:name=".pages.main.main_page.chat.group_chat_page.shop_page.GoodsActivity" />
+        <activity android:name="vip.jokor.im.pages.util.SettingActivity" />
+        <activity android:name="vip.jokor.im.pages.main.main_page.chat.group_chat_page.shop_page.GoodsActivity" />
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -83,38 +83,38 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- MqttService -->
         <activity
-            android:name=".pages.util.web.WebActivity"
+            android:name="vip.jokor.im.pages.util.web.WebActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait" /> <!-- MqttService -->
         <activity
-            android:name=".pages.util.PlayActivity"
+            android:name="vip.jokor.im.pages.util.PlayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".pages.login.LoginActivity" /> <!-- bugly版本更新 -->
-        <activity android:name=".pages.main.MainActivity">
+        <activity android:name="vip.jokor.im.pages.login.LoginActivity" /> <!-- bugly版本更新 -->
+        <activity android:name="vip.jokor.im.pages.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- bugly，Android N 兼容 -->
-        <activity android:name=".pages.main.main_page.chat.chat_page.ChatActivity" /> <!-- 图片剪裁 -->
+        <activity android:name="vip.jokor.im.pages.main.main_page.chat.chat_page.ChatActivity" /> <!-- 图片剪裁 -->
         <activity
-            android:name=".pages.login.RegisterActivity"
+            android:name="vip.jokor.im.pages.login.RegisterActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".pages.util.userinfo.UserInfoActivity" />
-        <activity android:name=".pages.main.main_page.friends.ConfirmActivity" />
-        <activity android:name=".pages.main.main_page.search.SearchActivity" />
+        <activity android:name="vip.jokor.im.pages.util.userinfo.UserInfoActivity" />
+        <activity android:name="vip.jokor.im.pages.main.main_page.friends.ConfirmActivity" />
+        <activity android:name="vip.jokor.im.pages.main.main_page.search.SearchActivity" />
         <activity
-            android:name=".pages.main.main_page.chat.group_chat_page.GroupsActivity"
+            android:name="vip.jokor.im.pages.main.main_page.chat.group_chat_page.GroupsActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".pages.main.main_page.group.CreateGroupActivity" />
-        <activity android:name=".pages.main.main_page.group.GroupInfoActivity" />
-        <activity android:name=".pages.main.main_page.main.shop.ShopActivity" />
-        <activity android:name=".pages.main.main_page.main.topic.TopicActivity" />
-        <activity android:name=".pages.main.main_page.main.smart.SmartActivity" />
+        <activity android:name="vip.jokor.im.pages.main.main_page.group.CreateGroupActivity" />
+        <activity android:name="vip.jokor.im.pages.main.main_page.group.GroupInfoActivity" />
+        <activity android:name="vip.jokor.im.pages.main.main_page.main.shop.ShopActivity" />
+        <activity android:name="vip.jokor.im.pages.main.main_page.main.topic.TopicActivity" />
+        <activity android:name="vip.jokor.im.pages.main.main_page.main.smart.SmartActivity" />
 
         <meta-data
             android:name="UMENG_CHANNEL"
@@ -136,7 +136,7 @@
         </provider>
 
         <service
-            android:name=".im.MsgService"
+            android:name="vip.jokor.im.im.MsgService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="location" />

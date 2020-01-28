@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".pages.util.article.ReplyActivity">
+    tools:context="vip.jokor.im.pages.util.article.ReplyActivity">
 
     <LinearLayout
         android:id="@+id/container"
@@ -128,7 +128,7 @@
                 android:layout_height="5dp"
                 android:background="@color/grey"/>
 
-            <com.jokor.base.wedgit.NestedListView
+            <vip.jokor.im.wedgit.NestedListView
                 android:padding="6dp"
                 android:id="@+id/listview"
                 android:transcriptMode="normal"

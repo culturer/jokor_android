@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:id="@+id/container"
-    tools:context=".pages.main.main_page.chat.group_chat_page.chat_page.GroupChatFragment">
+    tools:context="vip.jokor.im.pages.main.main_page.chat.group_chat_page.chat_page.GroupChatFragment">
 
 <View
     android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <com.jokor.base.wedgit.BarChartView
+    <vip.jokor.im.wedgit.BarChartView
         android:id="@+id/audio_bar"
         android:visibility="gone"
         android:layout_gravity="center_horizontal"

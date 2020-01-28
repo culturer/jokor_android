@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_black"
-    tools:context=".pages.util.video.VideoActivity">
+    tools:context="vip.jokor.im.pages.util.video.VideoActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_page2"

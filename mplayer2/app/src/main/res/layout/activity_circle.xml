@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container"
-    tools:context=".pages.main.main_page.square.circle.CircleActivity">
+    tools:context="vip.jokor.im.pages.main.main_page.square.circle.CircleActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"

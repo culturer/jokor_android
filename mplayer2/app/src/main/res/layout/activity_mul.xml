@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.util.select_user.MulActivity">
+    tools:context="vip.jokor.im.pages.util.select_user.MulActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

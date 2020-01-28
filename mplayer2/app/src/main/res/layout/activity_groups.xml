@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".pages.main.main_page.chat.group_chat_page.GroupsActivity">
+    tools:context="vip.jokor.im.pages.main.main_page.chat.group_chat_page.GroupsActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.jokor.base.wedgit.bottom_navigation.MyViewPager
+    <vip.jokor.im.wedgit.bottom_navigation.MyViewPager
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

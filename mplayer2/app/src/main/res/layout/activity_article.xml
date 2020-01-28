@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".pages.util.article.ArticleActivity">
+    tools:context="vip.jokor.im.pages.util.article.ArticleActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -119,7 +119,7 @@
 
             </LinearLayout>
 
-            <com.jokor.base.wedgit.NestedListView
+            <vip.jokor.im.wedgit.NestedListView
                 android:padding="6dp"
                 android:id="@+id/listview"
                 android:transcriptMode="normal"

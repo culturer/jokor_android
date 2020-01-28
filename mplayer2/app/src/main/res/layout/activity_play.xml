@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.jokor.base.pages.util.PlayActivity">
+    tools:context="com.jokor.base.vip.jokor.base.pages.util.PlayActivity">
 
     <cn.jzvd.JzvdStd
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/nice_video_player"/>
 
-    <com.jokor.base.wedgit.ZoomImageView
+    <vip.jokor.im.wedgit.ZoomImageView
         android:id="@+id/img"
         android:visibility="gone"
         android:layout_width="match_parent"

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:id="@+id/container"
-    tools:context=".pages.util.userinfo.UserInfoActivity">
+    tools:context="vip.jokor.im.pages.util.userinfo.UserInfoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

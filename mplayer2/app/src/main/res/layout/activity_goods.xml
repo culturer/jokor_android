@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".pages.main.main_page.chat.group_chat_page.shop_page.GoodsActivity">
+    tools:context="vip.jokor.im.pages.main.main_page.chat.group_chat_page.shop_page.GoodsActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/grey"
-    tools:context="com.jokor.base.pages.main.main_page.chat.ChatFragment">
+    tools:context="com.jokor.base.vip.jokor.base.pages.main.main_page.chat.ChatFragment">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

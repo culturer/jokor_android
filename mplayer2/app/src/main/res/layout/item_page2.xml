@@ -12,7 +12,7 @@
         <!--android:gravity="center"-->
         <!--android:textSize="18sp" />-->
 
-    <com.jokor.base.pages.util.video.MyVideoPlayer
+    <vip.jokor.im.pages.util.video.MyVideoPlayer
         android:id="@+id/mp_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

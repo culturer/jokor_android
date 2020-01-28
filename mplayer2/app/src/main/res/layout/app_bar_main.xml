@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/content"
     android:background="@color/tool_bar"
-    tools:context="com.jokor.base.pages.main.MainActivity">
+    tools:context="com.jokor.base.vip.jokor.base.pages.main.MainActivity">
 
 
         <com.google.android.material.appbar.AppBarLayout

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/mFrameLayout"
     android:fitsSystemWindows="true"
-    tools:context="com.jokor.base.pages.util.web.WebActivity">
+    tools:context="com.jokor.base.vip.jokor.base.pages.util.web.WebActivity">
 
 
     <ren.yale.android.cachewebviewlib.CacheWebView

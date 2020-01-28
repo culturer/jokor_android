@@ -7,7 +7,7 @@
     android:scrollbars="vertical"
     android:fadingEdge="vertical"
     android:background="@color/grey"
-    tools:context=".pages.main.main_page.square.recommend.RecommendFragment">
+    tools:context="vip.jokor.im.pages.main.main_page.square.recommend.RecommendFragment">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/focus_refresh"

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".pages.main.main_page.main.shop.ShopActivity">
+    tools:context="vip.jokor.im.pages.main.main_page.main.shop.ShopActivity">
 
 
 </LinearLayout>

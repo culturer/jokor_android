@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".pages.main.main_page.chat.chat_page.ChatActivity">
+    tools:context="vip.jokor.im.pages.main.main_page.chat.chat_page.ChatActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-        <com.jokor.base.wedgit.BarChartView
+        <vip.jokor.im.wedgit.BarChartView
             android:id="@+id/audio_bar"
             android:visibility="gone"
             android:layout_gravity="center_horizontal"
