@@ -77,15 +77,12 @@ public class RecommendFragment extends Fragment {
         recommends_list = contentView.findViewById(R.id.recommends_list);
 
         recommendAdapter = new RecommendAdapter(R.layout.recommends_list_item,datas);
-        recommendAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                //点击进入详情
-                FriendsArticlesBean.ArticlesBean item = recommendAdapter.getItem(position);
-                Intent intent = new Intent(getContext(), ArticleActivity.class);
-                intent.putExtra("data", GsonUtil.getGson().toJson(item));
-                startActivity(intent);
-            }
+        recommendAdapter.setOnItemClickListener((adapter, view, position) -> {
+            //点击进入详情
+            FriendsArticlesBean.ArticlesBean item = recommendAdapter.getItem(position);
+            Intent intent = new Intent(getContext(), ArticleActivity.class);
+            intent.putExtra("data", GsonUtil.getGson().toJson(item));
+            startActivity(intent);
         });
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         //防止Item切换

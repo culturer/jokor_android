@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.reflect.TypeToken;
 
 import vip.jokor.im.R;
@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecommendAdapter extends BaseQuickAdapter<FriendsArticlesBean.ArticlesBean, BaseViewHolder> {
+    
+    String TAG = "RecommendAdapter" ;
 
     public RecommendAdapter(int layoutResId, @Nullable List<FriendsArticlesBean.ArticlesBean> data) {
         super(layoutResId, data);
@@ -56,14 +58,14 @@ public class RecommendAdapter extends BaseQuickAdapter<FriendsArticlesBean.Artic
         TextView praise_count = helper.getView(R.id.praise_count);
 
         ImageView like = helper.getView(R.id.priase);
-        setLike(like,item,mContext);
+        setLike(like,item,getContext());
 
         View.OnClickListener article_listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ArticleActivity.class);
+                Intent intent = new Intent(getContext(), ArticleActivity.class);
                 intent.putExtra("data", GsonUtil.getGson().toJson(item));
-                mContext.startActivity(intent);
+                getContext().startActivity(intent);
             }
         };
         content.setOnClickListener(article_listener);
@@ -84,7 +86,7 @@ public class RecommendAdapter extends BaseQuickAdapter<FriendsArticlesBean.Artic
                                 JSONObject jb = new JSONObject(t);
                                 int status = jb.getInt("status");
                                 if (status == 200){
-                                    ShowUtil.showToast(mContext,"删除动态成功！");
+                                    ShowUtil.showToast(getContext(),"删除动态成功！");
                                     getData().remove(item);
                                     notifyDataSetChanged();
                                 }
@@ -111,7 +113,7 @@ public class RecommendAdapter extends BaseQuickAdapter<FriendsArticlesBean.Artic
                 .error(R.mipmap.img_error)//加载错误之后的错误图
                 .circleCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL);//只缓存最终的图片
-        Glide.with(mContext)
+        Glide.with(getContext())
                 .load(item.getArticle().getIcon())
                 .apply(options)
                 .into(icon);
@@ -128,7 +130,7 @@ public class RecommendAdapter extends BaseQuickAdapter<FriendsArticlesBean.Artic
             img1.setVisibility(View.VISIBLE);
             img2.setVisibility(View.INVISIBLE);
             img3.setVisibility(View.INVISIBLE);
-            Glide.with(mContext)
+            Glide.with(getContext())
                     .load(images.get(0))
                     .apply(options1)
                     .into(img1);
@@ -137,11 +139,11 @@ public class RecommendAdapter extends BaseQuickAdapter<FriendsArticlesBean.Artic
             img1.setVisibility(View.VISIBLE);
             img2.setVisibility(View.VISIBLE);
             img3.setVisibility(View.INVISIBLE);
-            Glide.with(mContext)
+            Glide.with(getContext())
                     .load(images.get(0))
                     .apply(options1)
                     .into(img1);
-            Glide.with(mContext)
+            Glide.with(getContext())
                     .load(images.get(1))
                     .apply(options1)
                     .into(img2);
@@ -150,15 +152,15 @@ public class RecommendAdapter extends BaseQuickAdapter<FriendsArticlesBean.Artic
             img1.setVisibility(View.VISIBLE);
             img2.setVisibility(View.VISIBLE);
             img3.setVisibility(View.VISIBLE);
-            Glide.with(mContext)
+            Glide.with(getContext())
                     .load(images.get(0))
                     .apply(options1)
                     .into(img1);
-            Glide.with(mContext)
+            Glide.with(getContext())
                     .load(images.get(1))
                     .apply(options1)
                     .into(img2);
-            Glide.with(mContext)
+            Glide.with(getContext())
                     .load(images.get(2))
                     .apply(options1)
                     .into(img3);

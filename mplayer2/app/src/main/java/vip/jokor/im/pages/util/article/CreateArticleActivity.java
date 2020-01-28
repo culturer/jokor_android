@@ -142,12 +142,9 @@ public class CreateArticleActivity extends AppCompatActivity {
                 .addTo(gridView);
         adapter = new PhotoAdapter(R.layout.photo_grid_item,datas);
         adapter.addHeaderView(headerView);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (position == 0){
-                    addPhoto();
-                }
+        adapter.setOnItemClickListener((adapter1, view, position) -> {
+            if (position == 0){
+                addPhoto();
             }
         });
         gridView.setAdapter(adapter);
@@ -286,12 +283,9 @@ public class CreateArticleActivity extends AppCompatActivity {
             progress.setVisibility(View.INVISIBLE);
             progress_text.setVisibility(View.GONE);
             content.setFocusable(true);
-            adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    if (position<datas.size()){
-                        //点击图片
-                    }
+            adapter.setOnItemClickListener((adapter1, view, position) -> {
+                if (position<datas.size()){
+                    //点击图片
                 }
             });
         }else {

@@ -100,12 +100,7 @@ public class ActiveFragment extends Fragment {
                 .addTo(recycler_view);
 
         ActiveAdapter activeAdapter = new ActiveAdapter(R.layout.item_active,datas);
-        activeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getContext(), VideoActivity.class));
-            }
-        });
+        activeAdapter.setOnItemClickListener((adapter, view, position) -> startActivity(new Intent(getContext(), VideoActivity.class)));
         recycler_view.setAdapter(activeAdapter);
     }
 

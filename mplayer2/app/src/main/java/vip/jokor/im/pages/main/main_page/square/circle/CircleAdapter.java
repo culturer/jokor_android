@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 
 import vip.jokor.im.R;
 import vip.jokor.im.pages.main.main_page.square.circle.circle_data.CircleData;
@@ -33,9 +33,9 @@ public class CircleAdapter extends BaseQuickAdapter<CircleData, BaseViewHolder> 
         TextView grad = helper.getView(R.id.grad);
         RequestOptions options = new RequestOptions()
                 .error(R.mipmap.img_error)//加载错误之后的错误图
-                .transform(new GlideRoundTransform(mContext, 4))
+                .transform(new GlideRoundTransform(getContext(), 4))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);//只缓存最终的图片
-        Glide.with(mContext)
+        Glide.with(getContext())
                 .load(item.getCircle().getIcon())
                 .apply(options)
                 .into(icon);

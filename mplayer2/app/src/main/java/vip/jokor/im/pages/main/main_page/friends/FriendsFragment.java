@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
 
@@ -35,6 +36,9 @@ import vip.jokor.im.model.bean.GetFriendBean;
 import vip.jokor.im.model.bean.GroupBean;
 import vip.jokor.im.model.bean.GroupListBean;
 import vip.jokor.im.pages.main.MainActivity;
+import vip.jokor.im.pages.main.main_page.friends.adapter.NodeTreeAdapter;
+import vip.jokor.im.pages.main.main_page.friends.adapter.tree.FirstNode;
+import vip.jokor.im.pages.main.main_page.friends.adapter.tree.SecondNode;
 import vip.jokor.im.presenter.FriendPresenter;
 import vip.jokor.im.presenter.MainPresenter;
 import vip.jokor.im.pages.main.main_page.group.CreateGroupActivity;
@@ -55,6 +59,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import vip.jokor.im.model.db.Msg;
 
@@ -110,9 +117,44 @@ public class FriendsFragment extends Fragment {
 	private void initList(){
 		RecyclerView list = contentView.findViewById(R.id.list);
 		list.setLayoutManager(new LinearLayoutManager(getContext()));
-		NodeAdapter adapter = new NodeAdapter();
+		NodeTreeAdapter adapter = new NodeTreeAdapter();
 		list.setAdapter(adapter);
+		adapter.setNewData(getEntity());
+		// 模拟新增node
+//		list.postDelayed(new Runnable() {
+//			@Override
+//			public void run() {
+//				SecondNode seNode = new SecondNode(new ArrayList<BaseNode>(), "Second Node(This is added)");
+//				SecondNode seNode2 = new SecondNode(new ArrayList<BaseNode>(), "Second Node(This is added)");
+//				List<SecondNode> nodes = new ArrayList<>();
+//				nodes.add(seNode);
+//				nodes.add(seNode2);
+//				//第一个夫node，位置为子node的3号位置
+//				adapter.nodeAddData(adapter.getData().get(0), 2, nodes);
+//			}
+//		}, 2000);
 	}
+
+	private List<BaseNode> getEntity() {
+		List<BaseNode> list = new ArrayList<>();
+		for (int i = 0; i < 8; i++) {
+
+			List<BaseNode> secondNodeList = new ArrayList<>();
+			for (int n = 0; n <= 5; n++) {
+				SecondNode seNode = new SecondNode("title"+n);
+				secondNodeList.add(seNode);
+			}
+
+			FirstNode entity = new FirstNode(secondNodeList, "First Node " + i);
+
+			// 模拟 默认第0个是展开的
+			entity.setExpanded(i == 0);
+
+			list.add(entity);
+		}
+		return list;
+	}
+
 
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {

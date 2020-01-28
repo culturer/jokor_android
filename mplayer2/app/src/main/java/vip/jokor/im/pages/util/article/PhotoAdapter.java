@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 
 import vip.jokor.im.R;
 import vip.jokor.im.util.base.SizeUtil;
@@ -29,21 +29,21 @@ public class PhotoAdapter extends BaseQuickAdapter<Uri, BaseViewHolder> {
         ImageView img = (ImageView) helper.getView(R.id.img);
 
         if (item.getPath().equals("new")){
-            img.setBackground(mContext.getDrawable(R.drawable.bg_circle_grey));
+            img.setBackground(getContext().getDrawable(R.drawable.bg_circle_grey));
             helper.getView(R.id.del).setVisibility(View.GONE);
             RequestOptions options1 = new RequestOptions()
-                    .override(SizeUtil.dip2px(mContext,30),SizeUtil.dip2px(mContext,30))
+                    .override(SizeUtil.dip2px(getContext(),30),SizeUtil.dip2px(getContext(),30))
                     .error(R.mipmap.img_error)//加载错误之后的错误图
                     .fitCenter()
                     .diskCacheStrategy(DiskCacheStrategy.ALL);//只缓存最终的图片
-            Glide.with(mContext).load(R.drawable.camera).apply(options1).into(img);
+            Glide.with(getContext()).load(R.drawable.camera).apply(options1).into(img);
         }else {
-            img.setBackground(mContext.getDrawable(R.drawable.bg_circle_grey));
+            img.setBackground(getContext().getDrawable(R.drawable.bg_circle_grey));
             RequestOptions options1 = new RequestOptions()
                     .error(R.mipmap.img_error)//加载错误之后的错误图
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL);//只缓存最终的图片
-            Glide.with(mContext).load(item).apply(options1).into(img);
+            Glide.with(getContext()).load(item).apply(options1).into(img);
             helper.getView(R.id.del).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

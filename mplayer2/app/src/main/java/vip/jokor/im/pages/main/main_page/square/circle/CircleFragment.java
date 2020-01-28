@@ -115,13 +115,10 @@ public class CircleFragment extends Fragment {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rv_waterfall.setLayoutManager(linearLayoutManager);
         rv_waterfall.setAdapter(circleAdapter);
-        circleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getContext(),CircleActivity.class);
-                intent.putExtra("data", GsonUtil.getGson().toJson(datas.get(position)));
-                startActivityForResult(intent,0);
-            }
+        circleAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Intent intent = new Intent(getContext(),CircleActivity.class);
+            intent.putExtra("data", GsonUtil.getGson().toJson(datas.get(position)));
+            startActivityForResult(intent,0);
         });
         RecyclerViewDivider
                 .with(getContext())

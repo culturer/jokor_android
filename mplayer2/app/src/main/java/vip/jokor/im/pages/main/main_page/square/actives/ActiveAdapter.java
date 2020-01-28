@@ -20,7 +20,7 @@ public class ActiveAdapter extends BaseQuickAdapter<ActiveItem,ActiverHolder> {
 
     @Override
     protected void convert(@NonNull ActiverHolder helper, ActiveItem item) {
-        Glide.with(mContext).load(item.getDefaulticon()).into((ImageView) helper.getView(R.id.img));
+        Glide.with(getContext()).load(item.getDefaulticon()).into((ImageView) helper.getView(R.id.img));
 
     }
 
