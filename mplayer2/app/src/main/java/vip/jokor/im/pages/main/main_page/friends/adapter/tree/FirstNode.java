@@ -7,26 +7,30 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import vip.jokor.im.model.bean.CategorysBean;
+import vip.jokor.im.model.bean.FriendsBean;
+
 public class FirstNode extends BaseExpandNode {
 
-    private List<BaseNode> childNode;
-    private String title;
+    public CategorysBean categorysBean;
+    public List<BaseNode> friends;
 
-    public FirstNode(List<BaseNode> childNode, String title) {
-        this.childNode = childNode;
-        this.title = title;
+    public FirstNode(List<BaseNode> friends,CategorysBean categorysBean) {
+
+        this.categorysBean = categorysBean;
+        this.friends = friends;
 
         setExpanded(false);
     }
 
     public String getTitle() {
-        return title;
+        return categorysBean.getName();
     }
-
 
     @Nullable
     @Override
     public List<BaseNode> getChildNode() {
-        return childNode;
+        return friends;
     }
+
 }

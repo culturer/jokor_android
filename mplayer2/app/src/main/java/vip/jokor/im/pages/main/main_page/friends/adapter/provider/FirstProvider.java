@@ -34,14 +34,14 @@ public class FirstProvider extends BaseNodeProvider {
     @Override
     public void convert(@NotNull BaseViewHolder helper, @Nullable BaseNode data) {
 
-//        FirstNode entity = (FirstNode) data;
-//        helper.setText(R.id.title, entity.getTitle());
-//        helper.setImageResource(R.id.iv, R.drawable.arrow_r);
-//
+        FirstNode entity = (FirstNode) data;
         helper.setImageResource(R.id.group_indicator,R.drawable.ic_chevron_right_black_24dp);
-        helper.setText(R.id.group_name,"分类标题");
-        helper.setText(R.id.online_count,"5");
-
+        helper.setText(R.id.group_name,entity.categorysBean.getName());
+        if (entity.friends!=null){
+            helper.setText(R.id.online_count,""+entity.friends.size());
+        }else {
+            helper.setText(R.id.online_count,""+0);
+        }
         setArrowSpin(helper, data, false);
 
     }

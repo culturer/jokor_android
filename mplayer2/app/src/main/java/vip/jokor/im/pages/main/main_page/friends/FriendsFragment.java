@@ -25,13 +25,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
 
 import vip.jokor.im.R;
 import vip.jokor.im.base.Datas;
 import vip.jokor.im.im.MsgService;
+import vip.jokor.im.model.bean.FriendsBean;
 import vip.jokor.im.model.bean.GetFriendBean;
 import vip.jokor.im.model.bean.GroupBean;
 import vip.jokor.im.model.bean.GroupListBean;
@@ -93,7 +96,7 @@ public class FriendsFragment extends Fragment {
 		initSearch();
 		initNewFriends();
 		initList(new GetFriendBean());
-		initList();
+		initList(new GetFriendBean(),new ArrayList<>());
 		initData();
 		EventBus.getDefault().register(this);
 		return contentView;
@@ -114,12 +117,13 @@ public class FriendsFragment extends Fragment {
 		new_friend.setOnClickListener(v -> startActivity(new Intent(getContext(),ConfirmActivity.class)));
 	}
 
-	private void initList(){
+	private void initList(GetFriendBean friendBean,List<GroupBean> groupBeans){
 		RecyclerView list = contentView.findViewById(R.id.list);
 		list.setLayoutManager(new LinearLayoutManager(getContext()));
 		NodeTreeAdapter adapter = new NodeTreeAdapter();
 		list.setAdapter(adapter);
-		adapter.setNewData(getEntity());
+		adapter.setNewData(changeData(friendBean));
+
 		// 模拟新增node
 //		list.postDelayed(new Runnable() {
 //			@Override
@@ -133,28 +137,27 @@ public class FriendsFragment extends Fragment {
 //				adapter.nodeAddData(adapter.getData().get(0), 2, nodes);
 //			}
 //		}, 2000);
+
 	}
 
-	private List<BaseNode> getEntity() {
-		List<BaseNode> list = new ArrayList<>();
-		for (int i = 0; i < 8; i++) {
-
-			List<BaseNode> secondNodeList = new ArrayList<>();
-			for (int n = 0; n <= 5; n++) {
-				SecondNode seNode = new SecondNode("title"+n);
-				secondNodeList.add(seNode);
+	private List<BaseNode> changeData(GetFriendBean getFriendBean) {
+		List<BaseNode> datas = new ArrayList<>();
+		if (getFriendBean.getFriends()!=null && getFriendBean.getCategorys()!=null){
+			for (int i=0 ; i<getFriendBean.getCategorys().size();i++){
+				FirstNode data = new FirstNode(new ArrayList<>(),getFriendBean.getCategorys().get(i));
+				for (int j=0;j<getFriendBean.getFriends().size();j++){
+					if (getFriendBean.getFriends().get(j).getCategoryId() == getFriendBean.getCategorys().get(i).getId()){
+						data.friends.add(getFriendBean.getFriends().get(j));
+					}
+				}
+				datas.add(data);
 			}
-
-			FirstNode entity = new FirstNode(secondNodeList, "First Node " + i);
-
-			// 模拟 默认第0个是展开的
-			entity.setExpanded(i == 0);
-
-			list.add(entity);
+		}else {
+			getFriendBean.setCategorys(new ArrayList<>());
+			getFriendBean.setFriends(new ArrayList<>());
 		}
-		return list;
+		return datas;
 	}
-
 
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -193,6 +196,7 @@ public class FriendsFragment extends Fragment {
 				GetFriendBean friendBean = gson.fromJson(t,GetFriendBean.class);
 				Datas.setFriendBean(friendBean);
 				initList(Datas.getFriendBean());
+				initList(Datas.getFriendBean(),new ArrayList<>());
 			}
 			@Override
 			public void onFailure(VolleyError error) {

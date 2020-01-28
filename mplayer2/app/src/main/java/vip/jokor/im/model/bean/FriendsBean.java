@@ -1,7 +1,14 @@
 package vip.jokor.im.model.bean;
 
+
+import com.chad.library.adapter.base.entity.node.BaseNode;
+
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+
 //@Entity
-public class FriendsBean {
+public class FriendsBean extends BaseNode {
     /**
      * Id : 1
      * CategoryId : 1
@@ -66,4 +73,9 @@ public class FriendsBean {
         Friend = friend;
     }
 
+    @Nullable
+    @Override
+    public List<BaseNode> getChildNode() {
+        return null;
+    }
 }

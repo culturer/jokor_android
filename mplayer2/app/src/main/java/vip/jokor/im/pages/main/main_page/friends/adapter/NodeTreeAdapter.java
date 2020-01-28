@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import vip.jokor.im.model.bean.FriendsBean;
 import vip.jokor.im.pages.main.main_page.friends.adapter.provider.FirstProvider;
 import vip.jokor.im.pages.main.main_page.friends.adapter.provider.SecondProvider;
 import vip.jokor.im.pages.main.main_page.friends.adapter.tree.FirstNode;
@@ -25,7 +26,7 @@ public class NodeTreeAdapter extends BaseNodeAdapter {
         BaseNode node = data.get(position);
         if (node instanceof FirstNode) {
             return 1;
-        } else if (node instanceof SecondNode) {
+        } else if (node instanceof FriendsBean) {
             return 2;
         }
         return -1;
