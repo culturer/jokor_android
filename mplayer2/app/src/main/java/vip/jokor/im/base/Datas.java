@@ -47,7 +47,6 @@ public class Datas {
 		return autoLogin;
 	}
 
-
 	public static UserBean getUserInfo(){
 		if (user == null) {
 			Gson gson = GsonUtil.getGson();

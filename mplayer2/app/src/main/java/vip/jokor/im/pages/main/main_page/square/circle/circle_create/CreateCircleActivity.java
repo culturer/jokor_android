@@ -28,6 +28,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 
 import vip.jokor.im.R;
+import vip.jokor.im.base.BaseActivity;
 import vip.jokor.im.base.Datas;
 import vip.jokor.im.pages.main.main_page.square.circle.circle_data.Circle;
 import vip.jokor.im.pages.main.main_page.square.circle.CircleActivity;
@@ -63,7 +64,7 @@ import java.util.List;
 import static android.text.InputType.TYPE_CLASS_PHONE;
 import static vip.jokor.im.base.Urls.QINIU_URL;
 
-public class CreateCircleActivity extends AppCompatActivity {
+public class CreateCircleActivity extends BaseActivity {
 
     String TAG = "CreateCircleActivity" ;
 

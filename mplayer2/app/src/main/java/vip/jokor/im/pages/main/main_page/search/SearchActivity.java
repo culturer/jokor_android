@@ -12,10 +12,11 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 import vip.jokor.im.R;
+import vip.jokor.im.base.BaseActivity;
 import vip.jokor.im.util.base.SizeUtil;
 import vip.jokor.im.util.base.StatusBarUtil;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
 	
 	String TAG = "SearchActivity";
 	

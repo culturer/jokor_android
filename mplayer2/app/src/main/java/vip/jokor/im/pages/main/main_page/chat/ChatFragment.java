@@ -204,7 +204,11 @@ public class ChatFragment extends Fragment {
 			//单聊
 			if (item.getMsgFrom() == Msg.MSG_FROM_FRIEND){
 				intent.putExtra(CHAT_TYPE, Msg.MSG_FROM_FRIEND);
-				name.setText("["+item.getMsg()+"] "+item.getUserName());
+				if (item.getMsg() == null || item.getMsg().equals("")){
+					name.setText(item.getUserName());
+				}else {
+					name.setText(item.getMsg());
+				}
 				label.setText("vip");
 			}
 			//群聊
@@ -253,12 +257,12 @@ public class ChatFragment extends Fragment {
 							HttpCallback callback = new HttpCallback() {
 								@Override
 								public void onSuccess(String t) {
-									Log.e(TAG, "onSuccess: "+t );
+									Log.e(TAG, "loadUserInfo onSuccess: "+t );
 								}
 
 								@Override
 								public void onFailure(int errorNo, String strMsg) {
-									Log.e(TAG, "onFailure: "+errorNo+strMsg );
+									Log.e(TAG,  "loadUserInfo onFailure: "+errorNo+strMsg );
 								}
 							};
 							UserBean user = UserPresenter.getInstance().loadUserInfo(userId,callback);

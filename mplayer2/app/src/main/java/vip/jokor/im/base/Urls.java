@@ -8,6 +8,7 @@ public class Urls {
 //	public static String HOST_DATA = "http://106.12.98.18:10005";
 
 	public static String QINIU_URL = "http://qiniu.jokor.vip/";
+	public static String DEVICE_TOKEN = "";
 
 	public static final String USER_PATH = "/user";
 	// user code
@@ -24,6 +25,7 @@ public class Urls {
 
 	// config code
 	public static final int CODE_GET_7NIUTOKEN = 0;
+	public static final int CODE_UPDATE_DEVICETOKEN = 1;
 
 	public static final String GROUP_PATH = "/group";
 	// group code

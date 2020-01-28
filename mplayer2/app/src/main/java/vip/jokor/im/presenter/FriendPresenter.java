@@ -27,10 +27,6 @@ public class FriendPresenter {
 
     }
 
-    public static final int OPT_SEND = 0 ;
-    public static final int OPT_THROUGH = 1 ;
-    public static final int OPT_REFUSE = 2 ;
-    public static final int OPT_IGNORE = 3 ;
     public void through(Context context, AppliesBean data, int opt, HttpCallback callback){
         HttpParams params = new HttpParams();
         params.put("options",CODE_GET_OPTAPPLY);

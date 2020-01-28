@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.google.android.material.tabs.TabLayout;
 
 import vip.jokor.im.R;
+import vip.jokor.im.base.BaseActivity;
 import vip.jokor.im.pages.main.main_page.square.circle.circle_data.CircleData;
 import vip.jokor.im.pages.main.main_page.square.circle.circle_pages.CityFragment;
 import vip.jokor.im.pages.main.main_page.square.circle.circle_pages.ClassicFragment;
@@ -69,7 +70,7 @@ import cn.bertsir.zbar.utils.QRUtils;
 import static vip.jokor.im.wedgit.util.QrCodeUtil.QRInfo.QR_TYPE_CIRCLE;
 import static java.util.Calendar.DAY_OF_YEAR;
 
-public class CircleActivity extends AppCompatActivity {
+public class CircleActivity extends BaseActivity {
 
     String TAG = "CircleActivity";
 

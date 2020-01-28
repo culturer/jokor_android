@@ -9,6 +9,7 @@ import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 
+import static vip.jokor.im.base.Urls.CODE_ADD_USERLIST;
 import static vip.jokor.im.base.Urls.CODE_DEL_USER;
 import static vip.jokor.im.base.Urls.CODE_GET_USERINFO;
 import static vip.jokor.im.base.Urls.HOST_DATA;
@@ -64,6 +65,29 @@ public class UserPresenter {
         params.put("options",CODE_DEL_USER);
         params.put("userId",""+Datas.getUserInfo().getId());
         params.put("friendId",""+friendId);
+        new RxVolley.Builder()
+                .url(HOST_DATA+USER_PATH)
+                .httpMethod(RxVolley.Method.POST) //default GET or POST/PUT/DELETE/HEAD/OPTIONS/TRACE/PATCH
+                .contentType(RxVolley.ContentType.FORM)//default FORM or JSON
+                .params(params)
+                .shouldCache(false) //default: get true, post false
+                .callback(callback)
+                .encoding("UTF-8") //default
+                .doTask();
+    }
+
+    public void addFriend(String tag , long friendId,long category,String msg ,HttpCallback callback){
+        Log.e(TAG, "addFriend: TAG --- "+tag );
+        Log.e(TAG, "addFriend: fromCategoryId "+category );
+        HttpParams params = new HttpParams();
+        params.put("options",CODE_ADD_USERLIST);
+        params.put("friendId",""+friendId);
+        params.put("userId",""+Datas.getUserInfo().getId());
+        params.put("msg",msg);
+        params.put("categoryId",""+category);
+        params.put("fromUsername",Datas.getUserInfo().getUserName());
+        params.put("fromIcon",Datas.getUserInfo().getIcon());
+
         new RxVolley.Builder()
                 .url(HOST_DATA+USER_PATH)
                 .httpMethod(RxVolley.Method.POST) //default GET or POST/PUT/DELETE/HEAD/OPTIONS/TRACE/PATCH

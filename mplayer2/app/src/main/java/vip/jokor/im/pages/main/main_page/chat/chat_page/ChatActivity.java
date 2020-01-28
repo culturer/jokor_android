@@ -42,9 +42,13 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import vip.jokor.im.R;
+import vip.jokor.im.base.BaseActivity;
+import vip.jokor.im.base.Datas;
 import vip.jokor.im.im.MsgEvent;
+import vip.jokor.im.model.bean.UserBean;
 import vip.jokor.im.model.db.Msg;
 import vip.jokor.im.model.db.Session;
+import vip.jokor.im.pages.util.userinfo.UserInfoActivity;
 import vip.jokor.im.presenter.ChatPresenter;
 import vip.jokor.im.presenter.UserPresenter;
 import vip.jokor.im.util.base.FileUtil;
@@ -78,7 +82,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseActivity {
 	
 	private String TAG = "ChatActivity";
 
@@ -518,9 +522,7 @@ public class ChatActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.user_info_stranger, menu);
-//		if (session.getMsgFrom() == MSG_FROM_FRIEND) getMenuInflater().inflate(R.menu.user_info_stranger, menu);
-//		if (session.getMsgFrom() == MSG_FROM_GROUP)  getMenuInflater().inflate(R.menu.group_info, menu);
+		getMenuInflater().inflate(R.menu.menu_chat, menu);
 		return true;
 	}
 	
@@ -530,33 +532,52 @@ public class ChatActivity extends AppCompatActivity {
 			case android.R.id.home:
 				finish();
 				break;
-			case R.id.delete:
-				HttpCallback callback = new HttpCallback() {
-					@Override
-					public void onSuccess(String t) {
-						Log.e(TAG, "删除好友 onSuccess: "+t );
-						try {
-							JSONObject jb = new JSONObject(t);
-							int status = jb.getInt("status");
-							if (status == 200){
-								ShowUtil.showToast(getApplicationContext(),"删除好友成功");
-								finish();
-							}else {
-								ShowUtil.showToast(ChatActivity.this,"删除好友失败");
-							}
-						} catch (JSONException e) {
-							ShowUtil.showToast(ChatActivity.this,"参数错误");
-							e.printStackTrace();
+			default:
+				Log.e(TAG, "onOptionsItemSelected: 点击右上角菜单" +session.getToId());
+				if (Datas.getFriendBean()!=null && Datas.getFriendBean().getFriends()!=null){
+					for (int i=0;i<Datas.getFriendBean().getFriends().size();i++){
+						Log.e(TAG, "onOptionsItemSelected: 点击右上角菜单编号" +GsonUtil.getGson().toJson(Datas.getFriendBean().getFriends().get(i).getFriend().getId()));
+						if (Datas.getFriendBean().getFriends().get(i).getFriend().getId() == session.getToId()){
+							Intent intent = new Intent(ChatActivity.this, UserInfoActivity.class);
+							String strUser = GsonUtil.getGson().toJson(Datas.getFriendBean().getFriends().get(i).getFriend());
+							intent.putExtra("userInfo",strUser);
+							startActivity(intent);
+							break;
 						}
 					}
+				}else {
+					Log.e(TAG, "onOptionsItemSelected: 点击右上角菜单 好友列表数据为空" );
+				}
+				break;
 
-					@Override
-					public void onFailure(VolleyError error) {
-						Log.e(TAG, "删除好友 onFailure: "+error.getMessage() );
-					}
-				};
-				Log.e(TAG, "onOptionsItemSelected: 删除好友" + GsonUtil.getGson().toJson(session) );
-				UserPresenter.getInstance().deleteFriend(TAG,session.getToId(),callback);
+
+//			case R.id.delete:
+//				HttpCallback callback = new HttpCallback() {
+//					@Override
+//					public void onSuccess(String t) {
+//						Log.e(TAG, "删除好友 onSuccess: "+t );
+//						try {
+//							JSONObject jb = new JSONObject(t);
+//							int status = jb.getInt("status");
+//							if (status == 200){
+//								ShowUtil.showToast(getApplicationContext(),"删除好友成功");
+//								finish();
+//							}else {
+//								ShowUtil.showToast(ChatActivity.this,"删除好友失败");
+//							}
+//						} catch (JSONException e) {
+//							ShowUtil.showToast(ChatActivity.this,"参数错误");
+//							e.printStackTrace();
+//						}
+//					}
+//
+//					@Override
+//					public void onFailure(VolleyError error) {
+//						Log.e(TAG, "删除好友 onFailure: "+error.getMessage() );
+//					}
+//				};
+//				Log.e(TAG, "onOptionsItemSelected: 删除好友" + GsonUtil.getGson().toJson(session) );
+//				UserPresenter.getInstance().deleteFriend(TAG,session.getToId(),callback);
 		}
 		return true;
 	}

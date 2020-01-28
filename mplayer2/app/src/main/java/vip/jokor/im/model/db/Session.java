@@ -41,7 +41,11 @@ public class Session {
         this.Sort = friendsBean.getSort();
         this.Msg = friendsBean.getMsg();
         this.Belong = friendsBean.getBelong();
-        this.UserName = friendsBean.getFriend().getUserName();
+        if (friendsBean.getMsg()==null || friendsBean.getMsg().equals("")){
+            this.UserName = friendsBean.getMsg();
+        }else {
+            this.UserName = friendsBean.getFriend().getUserName();
+        }
         this.Icon = friendsBean.getFriend().getIcon();
         this.VipGrad = friendsBean.getFriend().getVipGrad();
         this.Grad = friendsBean.getFriend().getGrad();

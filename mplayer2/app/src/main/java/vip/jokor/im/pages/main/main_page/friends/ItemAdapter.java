@@ -34,9 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static vip.jokor.im.presenter.FriendPresenter.OPT_IGNORE;
-import static vip.jokor.im.presenter.FriendPresenter.OPT_REFUSE;
-import static vip.jokor.im.presenter.FriendPresenter.OPT_THROUGH;
 
 class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
@@ -92,7 +89,7 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
         itemViewHolder.subTitle.setText(data.getMsg());
 
         switch (data.getStatus()){
-            case 0:
+            case AppliesBean.StatusSend:
                 HttpCallback callback = new HttpCallback() {
                     @Override
                     public void onSuccess(String t) {
@@ -104,7 +101,6 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
                                 data.setStatus(apply_status);
                                 notifyDataSetChanged();
                                 //这里需要发送推送消息
-
                                 ShowUtil.showToast(context,"该好友请求已处理过哦！");
                             }else{
                                 ShowUtil.showToast(context,"该好友请求已处理过哦！");
@@ -120,7 +116,8 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
                         Log.e(TAG, "onFailure: "+error.getMessage() );
                     }
                 };
-                itemViewHolder.status.setImageResource(R.drawable.note);
+                itemViewHolder.status.setText("待处理");
+                itemViewHolder.status.setTextColor(context.getColor(R.color.light_black));
                 itemViewHolder.status.setOnClickListener(v -> {
                     ShowUtil.showPopupMenu(
                             context,
@@ -128,9 +125,9 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
                             R.menu.confirm_add,
                             item -> {
                                 switch (item.getItemId()){
-                                    case R.id.add: FriendPresenter.getInstance().through(context,data,OPT_THROUGH,callback);
-                                    case R.id.refuse:FriendPresenter.getInstance().through(context,data,OPT_REFUSE,callback);
-                                    case R.id.ignore:FriendPresenter.getInstance().through(context,data,OPT_IGNORE,callback);
+                                    case R.id.add: FriendPresenter.getInstance().through(context,data,AppliesBean.StatusAgree,callback);
+                                    case R.id.refuse:FriendPresenter.getInstance().through(context,data,AppliesBean.StatusRefuse,callback);
+                                    case R.id.ignore:FriendPresenter.getInstance().through(context,data,AppliesBean.StatusIgnore,callback);
                                 }
                                 return true;
                             },
@@ -138,18 +135,19 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
                     );
                 });
                 break;
-            case 1:
-                itemViewHolder.status.setImageResource(R.drawable.yanshou);
-                itemViewHolder.status.setOnClickListener(v -> {
-                    ShowUtil.showToast(context,"您已经通过该好友的好友请求哦！");
-                });
+            case AppliesBean.StatusAgree:
+                itemViewHolder.status.setText("已同意");
+                itemViewHolder.status.setTextColor(context.getColor(R.color.green));
+                itemViewHolder.status.setOnClickListener(v -> ShowUtil.showToast(context,"您已经通过该好友的好友请求哦！"));
                 break;
-            case 2:
-                itemViewHolder.status.setImageResource(R.drawable.close);
+            case AppliesBean.StatusRefuse:
+                itemViewHolder.status.setText("已拒绝");
+                itemViewHolder.status.setTextColor(context.getColor(R.color.red));
                 itemViewHolder.status.setOnClickListener(v -> ShowUtil.showToast(context,"您已经拒绝该好友的好友请求哦！"));
                 break;
-            case 3:
-                itemViewHolder.status.setImageResource(R.drawable.ignore_eye);
+            case AppliesBean.StatusIgnore:
+                itemViewHolder.status.setText("已忽略");
+                itemViewHolder.status.setTextColor(context.getColor(R.color.square_tab_unselected));
                 itemViewHolder.status.setOnClickListener(v -> ShowUtil.showToast(context,"您已经忽略该好友的好友请求哦！"));
         }
     }
@@ -173,7 +171,7 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 
         ImageView icon;
-        ImageView status;
+        TextView status;
         TextView title;
         TextView subTitle;
 

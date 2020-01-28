@@ -193,7 +193,7 @@ public class FriendsFragment extends Fragment {
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 				int type = adapter.getChildType(groupPosition);
-				if (type == Msg.MSG_FROM_FRIEND)MainPresenter.getInstance().openP2PSession(adapter.getChild(groupPosition,childPosition),getContext());
+				if (type == Msg.MSG_FROM_FRIEND)MainPresenter.getInstance().openP2PSession(adapter.getChild(groupPosition,childPosition),getContext(),false);
 				if (type == Msg.MSG_FROM_GROUP)MainPresenter.getInstance().openGroupSession(adapter.getChatGroup(childPosition),getContext());
 				return true;
 			}

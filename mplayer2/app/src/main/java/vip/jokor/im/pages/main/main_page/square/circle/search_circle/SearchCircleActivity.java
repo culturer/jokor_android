@@ -20,6 +20,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.ihidea.multilinechooselib.MultiLineChooseLayout;
 
 import vip.jokor.im.R;
+import vip.jokor.im.base.BaseActivity;
 import vip.jokor.im.pages.main.main_page.square.circle.CircleActivity;
 import vip.jokor.im.pages.main.main_page.square.circle.CircleEvent;
 import vip.jokor.im.pages.main.main_page.square.circle.circle_data.Circle;
@@ -42,7 +43,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchCircleActivity extends AppCompatActivity {
+public class SearchCircleActivity extends BaseActivity {
 
     private String TAG = "SearchCircleActivity" ;
 

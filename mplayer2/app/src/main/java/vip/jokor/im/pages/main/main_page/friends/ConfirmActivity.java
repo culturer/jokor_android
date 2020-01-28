@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import vip.jokor.im.R;
+import vip.jokor.im.base.BaseActivity;
 import vip.jokor.im.model.bean.ApplyBean;
 import vip.jokor.im.model.bean.UserBean;
 import vip.jokor.im.presenter.MainPresenter;
@@ -34,7 +35,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ConfirmActivity extends AppCompatActivity {
+public class ConfirmActivity extends BaseActivity {
 
 	private static final String TAG = "ConfirmActivity";
 
@@ -96,6 +97,7 @@ public class ConfirmActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()){
+			case android.R.id.home: finish();break;
             case R.id.add_friend : add_friend() ;break;
         }
 		return super.onOptionsItemSelected(item);

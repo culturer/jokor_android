@@ -21,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import vip.jokor.im.R;
+import vip.jokor.im.base.BaseActivity;
 import vip.jokor.im.base.Datas;
 import vip.jokor.im.pages.util.SettingActivity;
 import vip.jokor.im.pages.util.userinfo.UserInfoActivity;
@@ -42,7 +43,7 @@ import vip.jokor.im.wedgit.util.ShowUtil;
 
 import cn.jzvd.Jzvd;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 	private static final String TAG = "MainActivity";
 

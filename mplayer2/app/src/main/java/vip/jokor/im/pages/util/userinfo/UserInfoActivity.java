@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -27,8 +28,10 @@ import vip.jokor.im.base.Datas;
 import vip.jokor.im.model.bean.FriendsArticlesBean;
 import vip.jokor.im.model.bean.FriendsBean;
 import vip.jokor.im.model.bean.UserBean;
+import vip.jokor.im.presenter.ChatPresenter;
 import vip.jokor.im.presenter.MainPresenter;
 import vip.jokor.im.pages.main.main_page.friends.FriendEvent;
+import vip.jokor.im.presenter.UserPresenter;
 import vip.jokor.im.util.base.GsonUtil;
 import vip.jokor.im.util.base.SizeUtil;
 import vip.jokor.im.util.base.StatusBarUtil;
@@ -117,9 +120,8 @@ public class UserInfoActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case android.R.id.home:
-				finish();
-				break;
+			case android.R.id.home: finish();break;
+			case R.id.add :addFriend();break;
 		}
 		return true;
 	}
@@ -288,6 +290,64 @@ public class UserInfoActivity extends AppCompatActivity {
 		}
 
 
+	}
+
+	private void addFriend(){
+		//这里要先验证该用户是否是好友
+		View contentView = getLayoutInflater().inflate(R.layout.pop_add_friend,null);
+		EditText et_tel = contentView.findViewById(R.id.tel);
+		et_tel.setInputType(InputType.TYPE_CLASS_TEXT);
+		et_tel.setHint("设置好友备注！~");
+		Spinner type = contentView.findViewById(R.id.type);
+		type.setVisibility(View.VISIBLE);
+		String[] strSpinnerItems = new String[Datas.getFriendBean().getCategorys().size()];
+		for (int j=0;j<5;j++){
+			strSpinnerItems[j]=Datas.getFriendBean().getCategorys().get(j).getName();
+		}
+		ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(UserInfoActivity.this,R.layout.appoint_select,strSpinnerItems);
+		spinnerAdapter.setDropDownViewResource(R.layout.appoint_item);
+		type.setAdapter(spinnerAdapter);
+		type.setSelection(1);
+		android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(UserInfoActivity.this);
+		android.app.AlertDialog dialog = builder.setTitle("添加好友")
+				.setView(contentView)
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialogInterface, int i) {
+						HttpCallback callback = new HttpCallback() {
+							@Override
+							public void onSuccess(String t) {
+								Log.e(TAG, "addFriend onSuccess: "+t );
+								try {
+									JSONObject jb = new JSONObject(t);
+									int status = jb.getInt("status");
+									if (status == 200){
+										ShowUtil.showToast(getApplicationContext(),"添加好友成功");
+										//在这里需要更新UI界面
+										FriendsBean friendsBean = GsonUtil.getGson().fromJson(jb.getString("new_friend"),FriendsBean.class);
+										Log.i(TAG, "addFriend: "+GsonUtil.getGson().toJson(friendsBean));
+										EventBus.getDefault().postSticky(new FriendEvent(TAG,friendsBean));
+										MainPresenter.getInstance().openP2PSession(friendsBean,UserInfoActivity.this,true);
+										finish();
+									}else {
+										Snackbar.make(myView,"该用户不存在！", Snackbar.LENGTH_SHORT).show();
+									}
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+							}
+
+							@Override
+							public void onFailure(VolleyError error) {
+								Log.e(TAG, "addFriend onFailure: "+error.getMessage() );
+								Snackbar.make(myView,"网络错误！", Snackbar.LENGTH_SHORT).show();
+							}
+						};
+						MainPresenter.getInstance().addFriend(Datas.getFriendBean().getCategorys().get((int) type.getSelectedItemId()).getId(),et_tel.getText().toString(),user.getId(),callback);
+					}
+				})
+				.create();
+		dialog.show();
 	}
 
 }

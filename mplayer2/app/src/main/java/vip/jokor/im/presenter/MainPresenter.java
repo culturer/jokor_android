@@ -26,6 +26,7 @@ import com.bumptech.glide.request.transition.Transition;
 
 import vip.jokor.im.R;
 import vip.jokor.im.base.Datas;
+import vip.jokor.im.base.Urls;
 import vip.jokor.im.im.MsgService;
 import vip.jokor.im.model.bean.FriendsBean;
 import vip.jokor.im.model.bean.GroupBean;
@@ -44,6 +45,7 @@ import vip.jokor.im.wedgit.util.ShowUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.kymjs.rxvolley.http.VolleyError;
 
 import java.util.Date;
 import java.util.Timer;
@@ -54,9 +56,12 @@ import io.objectbox.Box;
 import vip.jokor.im.model.db.Msg;
 
 import static vip.jokor.im.base.Urls.CODE_ADD_USERLIST;
+import static vip.jokor.im.base.Urls.CODE_GET_7NIUTOKEN;
 import static vip.jokor.im.base.Urls.CODE_GET_APPLIES;
 import static vip.jokor.im.base.Urls.CODE_GET_USERINFO;
 
+import static vip.jokor.im.base.Urls.CODE_UPDATE_DEVICETOKEN;
+import static vip.jokor.im.base.Urls.CONFIG_PATH;
 import static vip.jokor.im.base.Urls.HOST_DATA;
 import static vip.jokor.im.base.Urls.USER_PATH;
 
@@ -172,7 +177,7 @@ public class MainPresenter {
     }
 
     //创建单聊会话
-    public void openP2PSession(FriendsBean friendsBean, Context context){
+    public void openP2PSession(FriendsBean friendsBean, Context context,boolean isNewFriend){
         //1.查询数据库，如果有则直接打开
         //2.如果没有就创建后打开
         Box<Session> sessionBox =  DBManager.getInstance().getSessionBox();
@@ -180,13 +185,17 @@ public class MainPresenter {
         if ( session == null ){
             session = new Session() ;
             session.setDataFromFriendsBean(friendsBean) ;
-            session.setTmpMsg("");
-            session.setTmpMsgCount(-1);
+            if (isNewFriend){
+                session.setTmpMsg("新朋友");
+                session.setTmpMsgCount(1);
+                ChatPresenter.getInstance().senTextdMsg(session,"你好");
+            }else {
+                session.setTmpMsg("");
+                session.setTmpMsgCount(-1);
+            }
             session.setTmpTime(new Date(System.currentTimeMillis()));
             sessionBox.put(session);
         }
-        Log.e(TAG, "openSession: friend --- "+GsonUtil.getGson().toJson(friendsBean) );
-        Log.e(TAG, "openSession: session --- "+GsonUtil.getGson().toJson(session) );
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra(ChatActivity.CHAT_TYPE, Msg.MSG_FROM_FRIEND);
         intent.putExtra("session",GsonUtil.getGson().toJson(session));
@@ -252,6 +261,8 @@ public class MainPresenter {
         params.put("userId",""+Datas.getUserInfo().getId());
         params.put("msg",msg);
         params.put("categoryId",""+category);
+        params.put("fromUsername",Datas.getUserInfo().getUserName());
+        params.put("fromIcon",Datas.getUserInfo().getIcon());
 
         new RxVolley.Builder()
                 .url(HOST_DATA+USER_PATH)
@@ -264,6 +275,37 @@ public class MainPresenter {
                 .doTask();
     }
 
+    public void updateDeviceToken(){
+        if (Datas.getUserInfo()!=null && Datas.getUserInfo().getId()!=0 && !Urls.DEVICE_TOKEN.equals("")){
+            HttpCallback callback = new HttpCallback() {
+                @Override
+                public void onSuccess(String t) {
+                    Log.e(TAG, "updateDeviceToken onSuccess: "+t );
+                }
 
+                @Override
+                public void onFailure(VolleyError error) {
+                    Log.e(TAG, "updateDeviceToken onFailure: "+error.getMessage() );
+                }
+            };
+            Log.e(TAG, "updateDeviceToken: token "+Urls.DEVICE_TOKEN );
+            Log.e(TAG, "updateDeviceToken: channel "+android.os.Build.BRAND );
+            HttpParams params = new HttpParams();
+            params.put("options",CODE_UPDATE_DEVICETOKEN);
+            params.put("userId",""+Datas.getUserInfo().getId());
+            params.put("deviceToken",Urls.DEVICE_TOKEN);
+            params.put("channel",android.os.Build.BRAND);
+            new RxVolley.Builder()
+                    .url(HOST_DATA+CONFIG_PATH)
+                    .httpMethod(RxVolley.Method.POST) //default GET or POST/PUT/DELETE/HEAD/OPTIONS/TRACE/PATCH
+                    .contentType(RxVolley.ContentType.FORM)//default FORM or JSON
+                    .params(params)
+                    .shouldCache(false) //default: get true, post false
+                    .callback(callback)
+                    .encoding("UTF-8") //default
+                    .doTask();
+        }
+
+    }
 
 }
