@@ -124,6 +124,7 @@ public class MainPresenter {
                 .setPositiveButton("退出", (dialogInterface, i) -> {
                     //清除用户数据
                     Datas.setAutoLogin(false);
+                    activity.stopService(new Intent(activity,MsgService.class));
                     //退回到登录页面
                     Intent intent = new Intent(activity, LoginActivity.class);
                     activity.startActivity(intent);

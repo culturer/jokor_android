@@ -99,6 +99,7 @@ public class ChatAdapter extends BaseAdapter {
 		FrameLayout audio_layout = view.findViewById(R.id.audio_layout);
 		MultiWaveHeader audio_waveHeader = view.findViewById(R.id.audio_waveHeader);
 		TextView audio_text = view.findViewById(R.id.audio_text);
+		nick.setVisibility(View.GONE);
 
 		//加载消息数据
 		Msg item = getItem(i);
@@ -122,7 +123,7 @@ public class ChatAdapter extends BaseAdapter {
 		isMySend = item.getFromId() == Datas.getUserInfo().getId();
 		if (isMySend){
 			name.setText(Datas.getUserInfo().getUserName());
-			nick.setText("[编号"+Datas.getUserInfo().getId()+"]");
+
 			icon_left.setVisibility(View.INVISIBLE);
 			icon_right.setVisibility(View.VISIBLE);
 			RequestOptions options1 = new RequestOptions()
@@ -136,9 +137,7 @@ public class ChatAdapter extends BaseAdapter {
 					.into(icon_right);
 			msg_info.setGravity(Gravity.END);
 		}else {
-			name.setText(item.getUsername());
-			if (session.getMsgFrom() == Msg.MSG_FROM_GROUP)nick.setVisibility(View.GONE);
-			nick.setText("["+session.getMsg()+"]");
+			name.setText(session.getUserName());
 			icon_left.setVisibility(View.VISIBLE);
 			icon_right.setVisibility(View.INVISIBLE);
 			msg_info.setGravity(Gravity.START);
