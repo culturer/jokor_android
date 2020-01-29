@@ -4,6 +4,8 @@ import android.content.Context;
 
 import vip.jokor.im.base.Datas;
 import vip.jokor.im.model.bean.AppliesBean;
+import vip.jokor.im.wedgit.util.ShowUtil;
+
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -32,17 +34,6 @@ public class FriendPresenter {
         params.put("options",CODE_GET_OPTAPPLY);
         params.put("applyId",""+data.getId());
         params.put("do",opt);
-//        HttpCallback callback = new HttpCallback() {
-//            @Override
-//            public void onSuccess(String t) {
-//                Log.e(TAG, "onSuccess: "+t);
-//            }
-//
-//            @Override
-//            public void onFailure(VolleyError error) {
-//                ShowUtil.showToast(context,"网络异常！");
-//            }
-//        };
         new RxVolley.Builder()
                 .url(HOST_DATA+USER_PATH)
                 .httpMethod(RxVolley.Method.POST) //default GET or POST/PUT/DELETE/HEAD/OPTIONS/TRACE/PATCH

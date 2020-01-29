@@ -147,9 +147,4 @@ public class ConfirmActivity extends BaseActivity {
         dialog.show();
     }
 
-	@Subscribe
-	public void update(ApplyEvent event){
-		Log.e(TAG, "update: applies" );
-		mAdapter.update(event.appliesBean);
-	}
 }

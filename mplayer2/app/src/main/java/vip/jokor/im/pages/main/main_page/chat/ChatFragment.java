@@ -30,6 +30,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import vip.jokor.im.R;
 import vip.jokor.im.base.Datas;
 import vip.jokor.im.im.MsgEvent;
+import vip.jokor.im.model.DataManager;
 import vip.jokor.im.model.bean.GroupBean;
 import vip.jokor.im.model.bean.UserBean;
 import vip.jokor.im.model.db.DBManager;
@@ -37,6 +38,7 @@ import vip.jokor.im.model.db.Msg;
 import vip.jokor.im.model.db.Session;
 import vip.jokor.im.pages.main.MainActivity;
 import vip.jokor.im.pages.main.main_page.chat.chat_page.ChatActivity;
+import vip.jokor.im.pages.main.main_page.friends.DelFriendEvent;
 import vip.jokor.im.pages.main.main_page.group.GroupPresenter;
 import vip.jokor.im.presenter.ChatPresenter;
 import vip.jokor.im.presenter.UserPresenter;
@@ -184,7 +186,12 @@ public class ChatFragment extends Fragment {
 					.apply(options)
 					.into(icon);
 			//发送时间
-			time.setText(TimeUtil.date2Str(item.getTmpTime()));
+			if (item.getTmpTime() == null){
+				time.setText("");
+			}else {
+				time.setText(TimeUtil.date2Str(item.getTmpTime()));
+			}
+
 			//消息内容
 			String str = item.getTmpMsg();
 			//消息具体内容
@@ -225,6 +232,22 @@ public class ChatFragment extends Fragment {
 				startActivity(intent);
 			});
 			return convertView;
+		}
+	}
+
+	@Subscribe
+	public void update(DelFriendEvent event){
+		int index = -1;
+		for (int i=0;i<sessions.size();i++){
+			if (sessions.get(i).getToId() == event.getUserId()){
+				index = i;
+				break;
+			}
+		}
+		if (index!=-1){
+			ChatPresenter.getInstance().removeSession(sessions.get(index));
+			sessions.remove(index);
+			adapter.notifyDataSetChanged();
 		}
 	}
 

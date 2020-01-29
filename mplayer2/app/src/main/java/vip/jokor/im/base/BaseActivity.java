@@ -14,3 +14,5 @@ public class BaseActivity extends AppCompatActivity {
         PushAgent.getInstance(this).onAppStart();
     }
 }
+
+

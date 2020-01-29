@@ -76,8 +76,7 @@ public class UserPresenter {
                 .doTask();
     }
 
-    public void addFriend(String tag , long friendId,long category,String msg ,HttpCallback callback){
-        Log.e(TAG, "addFriend: TAG --- "+tag );
+    public void addFriend(long category,String msg,long friendId,HttpCallback callback){
         Log.e(TAG, "addFriend: fromCategoryId "+category );
         HttpParams params = new HttpParams();
         params.put("options",CODE_ADD_USERLIST);

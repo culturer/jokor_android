@@ -53,7 +53,7 @@ public class ChatPresenter {
         msg.setCreateTime(new Date());
         Log.i(TAG, "senTextdMsg: FromId [ "+Datas.getUserInfo().getId()+" ] ToId"+" [ "+session.getToId()+" ] ");
         EventBus.getDefault().postSticky(new MsgEvent(TAG+".senTextdMsg",msg));
-        return null;
+        return msg;
     }
 
     public void sendImgMsg(Session session,String imgPath){
@@ -211,6 +211,10 @@ public class ChatPresenter {
 
     public List<Session> getSessions(){
         return  DBManager.getInstance().getSessionBox().query().equal(Session_.Belong,Datas.getUserInfo().getId()).notEqual(Session_.tmpMsgCount,-1).orderDesc(Session_.tmpTime).build().find();
+    }
+
+    public void removeSession(Session session){
+        DBManager.getInstance().getSessionBox().remove(session);
     }
 
     public void clearSessionCount(Session session){

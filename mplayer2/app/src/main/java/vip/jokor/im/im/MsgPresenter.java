@@ -3,6 +3,8 @@ package vip.jokor.im.im;
 import android.util.Log;
 
 import com.google.gson.Gson;
+
+import vip.jokor.im.base.BaseApplication;
 import vip.jokor.im.base.Datas;
 import vip.jokor.im.model.bean.AppliesBean;
 import vip.jokor.im.model.db.DBManager;
@@ -10,13 +12,14 @@ import vip.jokor.im.model.db.Msg;
 import vip.jokor.im.model.db.Msg_;
 import vip.jokor.im.model.db.Session;
 import vip.jokor.im.model.db.Session_;
-import vip.jokor.im.pages.main.main_page.friends.ApplyEvent;
+import vip.jokor.im.pages.main.main_page.friends.NewFriendEvent;
 import vip.jokor.im.util.base.GsonUtil;
 import vip.jokor.im.util.base.TimeUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
 import io.objectbox.Box;
+import vip.jokor.im.wedgit.util.ShowUtil;
 
 public class MsgPresenter {
 
@@ -42,17 +45,19 @@ public class MsgPresenter {
                 case Msg.MSG_FROM_GROUP:MsgService.publish(strMsg,"g_"+msg.getToId(),2);break;
             }
         }
-        Log.e(TAG, "handleMsg: 聊天消息保存到数据库 "+GsonUtil.getGson().toJson(msg));
-        msg.setId(0);
-        DBManager.getInstance().getMsgBox().put(msg);
-        //处理聊天会话
-        switch (msg.getMsgFrom()){
-            case Msg.MSG_FROM_FRIEND:
-                handleUserMsg(event.getMsg());
-                break;
-            case Msg.MSG_FROM_GROUP:
-                handleGroupMsg(msg);
-                break;
+        if (msg.getMsgUsed() == Msg.MSG_USED_CHAT){
+            Log.e(TAG, "handleMsg: 聊天消息保存到数据库 "+GsonUtil.getGson().toJson(msg));
+            msg.setId(0);
+            DBManager.getInstance().getMsgBox().put(msg);
+            //处理聊天会话
+            switch (msg.getMsgFrom()){
+                case Msg.MSG_FROM_FRIEND:
+                    handleUserMsg(event.getMsg());
+                    break;
+                case Msg.MSG_FROM_GROUP:
+                    handleGroupMsg(msg);
+                    break;
+            }
         }
     }
 
@@ -128,16 +133,9 @@ public class MsgPresenter {
     }
 
     private void handleAddFriend(Msg msg){
-        AppliesBean appliesBean = new AppliesBean();
-        appliesBean.setType(msg.getMsgType());
-        appliesBean.setStatus(msg.getStatus());
-        appliesBean.setUserId(msg.getFromId());
-        appliesBean.setToId(msg.getToId());
-        appliesBean.setMsg(msg.getData());
-        appliesBean.setCreateTime(TimeUtil.date2Str(msg.getCreateTime()));
-        appliesBean.setFromUsername(msg.getUsername());
-        appliesBean.setFromIcon(msg.getIcon());
-        EventBus.getDefault().post(new ApplyEvent(appliesBean));
+        Log.e(TAG, "handleAddFriend: 新朋友:"+msg.getUsername()+","+msg.getFromId() );
+        EventBus.getDefault().postSticky(new NewFriendEvent(msg.getUsername(),msg.getFromId()));
+
     }
 
 

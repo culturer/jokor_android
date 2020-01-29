@@ -44,7 +44,7 @@ public class NotificationUtil {
 		//绑定Notification，发送通知请求
 		notifyManager.notify(0, builder.build());
 //		播放提示音
-		MediaPlayer mMediaPlayer=MediaPlayer.create(context, R.raw.new_order);
+		MediaPlayer mMediaPlayer=MediaPlayer.create(context, R.raw.notification);
 		mMediaPlayer.start();
 	}
 }

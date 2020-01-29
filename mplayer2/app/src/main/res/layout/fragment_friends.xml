@@ -40,28 +40,35 @@
         android:layout_margin="10dp"
         android:padding="10dp"/>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/new_friend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:drawableStart="@drawable/ic_add_black_24dp"
-        android:drawablePadding="10dp"
-        android:gravity="center_vertical"
-        android:padding="5dp"
-        android:text="新朋友"
-        android:textSize="16sp"
-        android:textColor="@color/tool_bar_text"/>
+        android:orientation="horizontal">
 
-    <vip.jokor.im.wedgit.iphone_treeview.IphoneTreeView
-        android:visibility="gone"
-        android:id="@+id/friend_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:childDivider="@color/grey"
-        android:dividerHeight="1dp"
-        android:transcriptMode="normal"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_add_black_24dp"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="新朋友"
+            android:textColor="@color/tool_bar_text"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/circle"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/bg_circle_red" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"

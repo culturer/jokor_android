@@ -3,6 +3,7 @@ package vip.jokor.im.pages.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,13 +18,20 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import vip.jokor.im.R;
 import vip.jokor.im.base.BaseActivity;
 import vip.jokor.im.base.Datas;
+import vip.jokor.im.pages.main.main_page.friends.NewFriendEvent;
 import vip.jokor.im.pages.util.SettingActivity;
+import vip.jokor.im.pages.util.article.ArticleEvent;
 import vip.jokor.im.pages.util.userinfo.UserInfoActivity;
 import vip.jokor.im.pages.main.main_page.chat.ChatFragment;
 import vip.jokor.im.pages.main.main_page.friends.ConfirmActivity;
@@ -53,7 +61,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 	public static DrawerLayout drawer;
 
 	ImageView nav_header_icon;
-
+	View circle0;
+	View circle1;
+	View circle2;
 
 	MainPresenter presenter = MainPresenter.getInstance();
 
@@ -78,6 +88,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 			startActivity(intent);
 			finish();
 		}
+		EventBus.getDefault().register(this);
 	}
 
 	@Override
@@ -124,6 +135,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 	private void initPage(){
 		navigation = findViewById(R.id.navigation);
+		//获取整个的NavigationView
+		BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
+		//这里就是获取所添加的每一个Tab(或者叫menu)，
+		View tab = menuView.getChildAt(0);
+		BottomNavigationItemView tab0 = (BottomNavigationItemView) tab;
+		//加载我们的角标View，新创建的一个布局
+		View badge = LayoutInflater.from(this).inflate(R.layout.main_bottom_circle_red, menuView, false);
+		//添加到Tab上
+		tab0.addView(badge);
+		circle0 = badge.findViewById(R.id.circle);
+		circle0.setVisibility(View.GONE);
+
+		BottomNavigationItemView tab1 = (BottomNavigationItemView) menuView.getChildAt(1);
+		//加载我们的角标View，新创建的一个布局
+		View badge1 = LayoutInflater.from(this).inflate(R.layout.main_bottom_circle_red, menuView, false);
+		//添加到Tab上
+		tab1.addView(badge1);
+		circle1 = badge1.findViewById(R.id.circle);
+		circle1.setVisibility(View.GONE);
+
+		BottomNavigationItemView tab2 = (BottomNavigationItemView) menuView.getChildAt(2);
+		//加载我们的角标View，新创建的一个布局
+		View badge2 = LayoutInflater.from(this).inflate(R.layout.main_bottom_circle_red, menuView, false);
+		//添加到Tab上
+		tab2.addView(badge2);
+		circle2 = badge2.findViewById(R.id.circle);
+		circle2.setVisibility(View.GONE);
+
 		pager = findViewById(R.id.pager);
 		BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = item -> {
 			switch (item.getItemId()) {
@@ -229,4 +268,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 		startActivity(intent);
 	}
 
+	@Subscribe
+	public void update(NewFriendEvent event){
+		boolean flag = false;
+		for (int i=0;i<Datas.getFriendBean().getFriends().size();i++){
+			if (Datas.getFriendBean().getFriends().get(i).getFriend().getId() == event.getUserId()){
+				flag = true;
+				break;
+			}
+		}
+		if (!flag){
+			ShowUtil.sendSimpleNotification(getApplicationContext(),"新朋友",event.getUsername()+" 请求添加好友");
+			MainActivity.this.runOnUiThread(() -> {
+				circle2.setVisibility(View.VISIBLE);
+			});
+
+		}else {
+			Log.e(TAG, "update: 添加好友好友已经存在" );
+		}
+	}
 }

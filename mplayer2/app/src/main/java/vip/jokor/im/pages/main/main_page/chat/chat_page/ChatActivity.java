@@ -550,34 +550,6 @@ public class ChatActivity extends BaseActivity {
 				}
 				break;
 
-
-//			case R.id.delete:
-//				HttpCallback callback = new HttpCallback() {
-//					@Override
-//					public void onSuccess(String t) {
-//						Log.e(TAG, "删除好友 onSuccess: "+t );
-//						try {
-//							JSONObject jb = new JSONObject(t);
-//							int status = jb.getInt("status");
-//							if (status == 200){
-//								ShowUtil.showToast(getApplicationContext(),"删除好友成功");
-//								finish();
-//							}else {
-//								ShowUtil.showToast(ChatActivity.this,"删除好友失败");
-//							}
-//						} catch (JSONException e) {
-//							ShowUtil.showToast(ChatActivity.this,"参数错误");
-//							e.printStackTrace();
-//						}
-//					}
-//
-//					@Override
-//					public void onFailure(VolleyError error) {
-//						Log.e(TAG, "删除好友 onFailure: "+error.getMessage() );
-//					}
-//				};
-//				Log.e(TAG, "onOptionsItemSelected: 删除好友" + GsonUtil.getGson().toJson(session) );
-//				UserPresenter.getInstance().deleteFriend(TAG,session.getToId(),callback);
 		}
 		return true;
 	}

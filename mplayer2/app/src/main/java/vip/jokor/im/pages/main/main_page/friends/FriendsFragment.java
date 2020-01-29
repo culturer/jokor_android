@@ -12,8 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -25,35 +23,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
 
 import vip.jokor.im.R;
 import vip.jokor.im.base.Datas;
-import vip.jokor.im.im.MsgService;
 import vip.jokor.im.model.bean.FriendsBean;
 import vip.jokor.im.model.bean.GetFriendBean;
 import vip.jokor.im.model.bean.GroupBean;
-import vip.jokor.im.model.bean.GroupListBean;
 import vip.jokor.im.pages.main.MainActivity;
 import vip.jokor.im.pages.main.main_page.friends.adapter.NodeTreeAdapter;
 import vip.jokor.im.pages.main.main_page.friends.adapter.tree.FirstNode;
-import vip.jokor.im.pages.main.main_page.friends.adapter.tree.SecondNode;
 import vip.jokor.im.presenter.FriendPresenter;
 import vip.jokor.im.presenter.MainPresenter;
 import vip.jokor.im.pages.main.main_page.group.CreateGroupActivity;
 import vip.jokor.im.pages.util.userinfo.UserInfoActivity;
-import vip.jokor.im.pages.main.main_page.group.GroupEvent;
 import vip.jokor.im.pages.main.main_page.group.GroupInfoActivity;
 import vip.jokor.im.pages.main.main_page.group.GroupPresenter;
 import vip.jokor.im.pages.main.main_page.search.SearchActivity;
 import vip.jokor.im.util.base.GsonUtil;
 import vip.jokor.im.util.base.SizeUtil;
-import vip.jokor.im.wedgit.iphone_treeview.IphoneTreeView;
-import vip.jokor.im.wedgit.iphone_treeview.TreeViewAdapter;
 import vip.jokor.im.wedgit.util.ShowUtil;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
@@ -66,18 +56,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import vip.jokor.im.model.db.Msg;
-
 
 public class FriendsFragment extends Fragment {
 	
 	private static final String TAG = "FriendsFragment";
 	
 	private View contentView;
-	private IphoneTreeView friend_list;
 
-	TreeViewAdapter adapter;
-	
+	View circle;
+	NodeTreeAdapter adapter;
+	RecyclerView list;
+
 	public FriendsFragment() {
 		// Required empty public constructor
 	}
@@ -92,10 +81,10 @@ public class FriendsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		contentView = inflater.inflate(R.layout.fragment_friends, container, false);
+		circle = contentView.findViewById(R.id.circle);	//		小红点
 		initToolBar();
 		initSearch();
 		initNewFriends();
-		initList(new GetFriendBean());
 		initList(new GetFriendBean(),new ArrayList<>());
 		initData();
 		EventBus.getDefault().register(this);
@@ -113,31 +102,16 @@ public class FriendsFragment extends Fragment {
 	}
 
 	private void initNewFriends(){
-		TextView new_friend = contentView.findViewById(R.id.new_friend);
+		View new_friend = contentView.findViewById(R.id.new_friend);
 		new_friend.setOnClickListener(v -> startActivity(new Intent(getContext(),ConfirmActivity.class)));
 	}
 
 	private void initList(GetFriendBean friendBean,List<GroupBean> groupBeans){
-		RecyclerView list = contentView.findViewById(R.id.list);
+		list = contentView.findViewById(R.id.list);
 		list.setLayoutManager(new LinearLayoutManager(getContext()));
-		NodeTreeAdapter adapter = new NodeTreeAdapter();
+		adapter = new NodeTreeAdapter();
 		list.setAdapter(adapter);
 		adapter.setNewData(changeData(friendBean));
-
-		// 模拟新增node
-//		list.postDelayed(new Runnable() {
-//			@Override
-//			public void run() {
-//				SecondNode seNode = new SecondNode(new ArrayList<BaseNode>(), "Second Node(This is added)");
-//				SecondNode seNode2 = new SecondNode(new ArrayList<BaseNode>(), "Second Node(This is added)");
-//				List<SecondNode> nodes = new ArrayList<>();
-//				nodes.add(seNode);
-//				nodes.add(seNode2);
-//				//第一个夫node，位置为子node的3号位置
-//				adapter.nodeAddData(adapter.getData().get(0), 2, nodes);
-//			}
-//		}, 2000);
-
 	}
 
 	private List<BaseNode> changeData(GetFriendBean getFriendBean) {
@@ -195,7 +169,6 @@ public class FriendsFragment extends Fragment {
 				Gson gson = GsonUtil.getGson();
 				GetFriendBean friendBean = gson.fromJson(t,GetFriendBean.class);
 				Datas.setFriendBean(friendBean);
-				initList(Datas.getFriendBean());
 				initList(Datas.getFriendBean(),new ArrayList<>());
 			}
 			@Override
@@ -204,73 +177,96 @@ public class FriendsFragment extends Fragment {
 			}
 		};
 		FriendPresenter.getInstance().getFriemds(callback);
-		HttpCallback callback1 = new HttpCallback() {
-			@Override
-			public void onSuccess(String t) {
-				Log.i(TAG, "get group onSuccess: "+t);
-				try {
-					JSONObject jb = new JSONObject(t);
-					int status = jb.getInt("status");
-					if (status == 200){
-						GroupListBean groupListBean = GsonUtil.getGson().fromJson(t,GroupListBean.class);
-						for (int i=0;i<groupListBean.getGroups().size();i++){
-							Datas.getGroups().add(groupListBean.getGroups().get(i).getGroup());
-						}
-						Log.i(TAG, "init group: "+GsonUtil.getGson().toJson(Datas.getGroups()));
-						MsgService.subscribe();
-					}
-					adapter.update(Datas.getGroups());
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-			@Override
-			public void onFailure(VolleyError error) {
-				Log.i(TAG, "onFailure: "+error.getMessage());
-			}
-		};
-		GroupPresenter.getInstance().getGroups(callback1);
 	}
 	
 	private void initSearch(){
 		contentView.findViewById(R.id.search).setOnClickListener(view -> startActivity(new Intent(getContext(), SearchActivity.class)));
 	}
-	
-	private void initList(GetFriendBean friendBean){
-		Log.i(TAG, "initList: 开始初始化好友列表！");
-		friend_list = contentView.findViewById(R.id.friend_list);
-
-		friend_list.setHeaderView(getLayoutInflater().inflate(R.layout.iphonetreeview_list_head_view, friend_list, false));
-		friend_list.setGroupIndicator(null);
-		//		初始化好友列表
-		adapter = new TreeViewAdapter(getContext(),this,friend_list, friendBean,Datas.getGroups());
-
-		friend_list.setAdapter(adapter);
-		friend_list.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-			@Override
-			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-				int type = adapter.getChildType(groupPosition);
-				if (type == Msg.MSG_FROM_FRIEND)MainPresenter.getInstance().openP2PSession(adapter.getChild(groupPosition,childPosition),getContext(),false);
-				if (type == Msg.MSG_FROM_GROUP)MainPresenter.getInstance().openGroupSession(adapter.getChatGroup(childPosition),getContext());
-				return true;
-			}
-		});
-	}
 
 	@Subscribe
 	public void update(FriendEvent event){
-		Log.i(TAG, "update: update friend list !");
-		Datas.getFriendBean().getFriends().add(event.friendsBean);
-		adapter.update(event.friendsBean);
+		Log.i(TAG, "update: update friend list !"+GsonUtil.getGson().toJson(event.friendsBean));
+		//添加好友成功后更新好友列表
+
+		// 新增node
+		list.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				List<BaseNode> datas = adapter.getData();
+				boolean flag = false;
+				int categoryIndex = -1;
+				for (int i=0;i<datas.size();i++){
+					FirstNode firstNode = (FirstNode) datas.get(i);
+					//找出分类索引
+					if (firstNode.categorysBean.getId() == event.friendsBean.getCategoryId())categoryIndex = i;
+					//判断是否已经是好友
+					for (int j=0;j<firstNode.friends.size();j++){
+						FriendsBean secondNode = (FriendsBean) firstNode.friends.get(j);
+						if (secondNode.getFriend().getId() == event.friendsBean.getFriend().getId()){
+							flag = true;
+							break;
+						}
+					}
+					if (flag){
+						break;
+					}
+				}
+				//如果好友列表里面没有这个好友，那么添加到好友列表
+				if (!flag){
+					if (categoryIndex == -1){
+						categoryIndex = 0;
+					}
+					adapter.nodeAddData(adapter.getData().get(categoryIndex),event.friendsBean);
+				}
+			}
+		}, 100);
+
 	}
 
 	@Subscribe
-	public void update(GroupEvent event){
-        Log.i(TAG, "update: update group list !"+GsonUtil.getGson().toJson(event));
-		GroupBean groupBean = event.getGroupBean();
-		adapter.update(groupBean);
+	public void update(NewFriendEvent event){
+		boolean flag = false;
+		for (int i=0;i<Datas.getFriendBean().getFriends().size();i++){
+			if (Datas.getFriendBean().getFriends().get(i).getFriend().getId() == event.getUserId()){
+				flag = true;
+				break;
+			}
+		}
+		if (!flag){
+			ShowUtil.sendSimpleNotification(getContext(),"新朋友",event.getUsername()+" 请求添加好友");
+			getActivity().runOnUiThread(() -> circle.setVisibility(View.VISIBLE));
+		}else {
+			Log.e(TAG, "update: 添加好友好友已经存在" );
+		}
 	}
 
+	@Subscribe
+	public void update(DelFriendEvent event){
+
+		// 删除好友
+		list.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				List<BaseNode> datas = adapter.getData();
+				boolean flag = false;
+				for (int i=0;i<datas.size();i++){
+					FirstNode firstNode = (FirstNode) datas.get(i);
+					//判断是否已经是好友
+					for (int j=0;j<firstNode.friends.size();j++){
+						FriendsBean secondNode = (FriendsBean) firstNode.friends.get(j);
+						if (secondNode.getFriend().getId() == event.getUserId()){
+							adapter.nodeRemoveData(adapter.getData().get(i),j);
+							flag = true;
+							break;
+						}
+					}
+					if (flag){
+						break;
+					}
+				}
+			}
+		}, 100);
+	}
 	private void add_friend(){
 		View contentView = getLayoutInflater().inflate(R.layout.pop_add_friend,null);
 		EditText et_tel = contentView.findViewById(R.id.tel);

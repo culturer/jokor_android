@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -253,27 +254,7 @@ public class MainPresenter {
                 .doTask();
     }
 
-    public void addFriend(long category,String msg,long friendId,HttpCallback callback){
-        Log.e(TAG, "addFriend: fromCategoryId "+category );
-        HttpParams params = new HttpParams();
-        params.put("options",CODE_ADD_USERLIST);
-        params.put("friendId",""+friendId);
-        params.put("userId",""+Datas.getUserInfo().getId());
-        params.put("msg",msg);
-        params.put("categoryId",""+category);
-        params.put("fromUsername",Datas.getUserInfo().getUserName());
-        params.put("fromIcon",Datas.getUserInfo().getIcon());
 
-        new RxVolley.Builder()
-                .url(HOST_DATA+USER_PATH)
-                .httpMethod(RxVolley.Method.POST) //default GET or POST/PUT/DELETE/HEAD/OPTIONS/TRACE/PATCH
-                .contentType(RxVolley.ContentType.FORM)//default FORM or JSON
-                .params(params)
-                .shouldCache(false) //default: get true, post false
-                .callback(callback)
-                .encoding("UTF-8") //default
-                .doTask();
-    }
 
     public void updateDeviceToken(){
         if (Datas.getUserInfo()!=null && Datas.getUserInfo().getId()!=0 && !Urls.DEVICE_TOKEN.equals("")){
@@ -294,7 +275,8 @@ public class MainPresenter {
             params.put("options",CODE_UPDATE_DEVICETOKEN);
             params.put("userId",""+Datas.getUserInfo().getId());
             params.put("deviceToken",Urls.DEVICE_TOKEN);
-            params.put("channel",android.os.Build.BRAND);
+            params.put("channel", Build.MANUFACTURER);
+            params.put("plat","android");
             new RxVolley.Builder()
                     .url(HOST_DATA+CONFIG_PATH)
                     .httpMethod(RxVolley.Method.POST) //default GET or POST/PUT/DELETE/HEAD/OPTIONS/TRACE/PATCH
@@ -305,7 +287,6 @@ public class MainPresenter {
                     .encoding("UTF-8") //default
                     .doTask();
         }
-
     }
 
 }
