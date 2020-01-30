@@ -3,6 +3,7 @@ package vip.jokor.im.presenter;
 import android.util.Log;
 
 import vip.jokor.im.base.Datas;
+import vip.jokor.im.model.bean.FriendsBean;
 import vip.jokor.im.model.bean.UserBean;
 
 import com.kymjs.rxvolley.RxVolley;
@@ -27,15 +28,15 @@ public class UserPresenter {
 
     private UserPresenter() { }
 
-    public UserBean loadUserInfo(long userId , HttpCallback callback){
+    public FriendsBean loadUserInfo(long userId , HttpCallback callback){
         if (userId == Datas.getUserInfo().getId()){
-            return Datas.getUserInfo();
+            return null;
         }
         //本地搜
         if (Datas.getFriendBean()!=null && Datas.getFriendBean().getFriends()!=null){
             for (int i=0;i<Datas.getFriendBean().getFriends().size();i++){
                 if (Datas.getFriendBean().getFriends().get(i).getFriend().getId() == userId){
-                    return Datas.getFriendBean().getFriends().get(i).getFriend();
+                    return Datas.getFriendBean().getFriends().get(i);
                 }
             }
         }

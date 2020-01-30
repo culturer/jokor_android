@@ -28,6 +28,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
 
 import vip.jokor.im.R;
+import vip.jokor.im.base.Config;
 import vip.jokor.im.base.Datas;
 import vip.jokor.im.model.bean.FriendsBean;
 import vip.jokor.im.model.bean.GetFriendBean;
@@ -82,6 +83,11 @@ public class FriendsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		contentView = inflater.inflate(R.layout.fragment_friends, container, false);
 		circle = contentView.findViewById(R.id.circle);	//		小红点
+		if (Config.isShowTab2()){
+			circle.setVisibility(View.VISIBLE);
+		}else {
+			circle.setVisibility(View.GONE);
+		}
 		initToolBar();
 		initSearch();
 		initNewFriends();
@@ -103,7 +109,14 @@ public class FriendsFragment extends Fragment {
 
 	private void initNewFriends(){
 		View new_friend = contentView.findViewById(R.id.new_friend);
-		new_friend.setOnClickListener(v -> startActivity(new Intent(getContext(),ConfirmActivity.class)));
+		new_friend.setOnClickListener(v -> {
+			Config.setTab2(false);
+			circle.setVisibility(View.GONE);
+			if(getActivity()instanceof MainActivity){
+				((MainActivity)getActivity()).disableRedCircle2();
+			}
+			startActivity(new Intent(getContext(),ConfirmActivity.class));
+		});
 	}
 
 	private void initList(GetFriendBean friendBean,List<GroupBean> groupBeans){
@@ -234,7 +247,10 @@ public class FriendsFragment extends Fragment {
 		}
 		if (!flag){
 			ShowUtil.sendSimpleNotification(getContext(),"新朋友",event.getUsername()+" 请求添加好友");
-			getActivity().runOnUiThread(() -> circle.setVisibility(View.VISIBLE));
+			getActivity().runOnUiThread(() -> {
+				Config.setTab0(true);
+				circle.setVisibility(View.VISIBLE);
+			});
 		}else {
 			Log.e(TAG, "update: 添加好友好友已经存在" );
 		}

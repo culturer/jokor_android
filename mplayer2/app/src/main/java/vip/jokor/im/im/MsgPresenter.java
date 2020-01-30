@@ -65,7 +65,14 @@ public class MsgPresenter {
         //更新会话信息
         Box<Session> sessionBox = DBManager.getInstance().getSessionBox();
         Session session;
-        session = sessionBox.query().equal(Session_.Belong,Datas.getUserInfo().getId()).equal(Session_.msgFrom,msg.getMsgFrom()).equal(Session_.toId,msg.getFromId()).or().equal(Session_.toId,msg.getToId()).build().findFirst();
+        session = sessionBox.query()
+                .equal(Session_.Belong,Datas.getUserInfo().getId())
+                .equal(Session_.msgFrom,msg.getMsgFrom())
+                .equal(Session_.toId,msg.getFromId())
+                .or()
+                .equal(Session_.toId,msg.getToId())
+                .build()
+                .findFirst();
         if (session==null) {
             Log.i(TAG, "update: 会话不存在,开始新建会话");
             session = new Session();
@@ -93,6 +100,7 @@ public class MsgPresenter {
             else { session.setTmpMsgCount(session.getTmpMsgCount()+1);}
         }
         //存储session状态
+        Log.e(TAG, "getView: 保存会话 "+GsonUtil.getGson().toJson(session) );
         DBManager.getInstance().getSessionBox().put(session);
     }
 

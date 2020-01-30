@@ -240,7 +240,7 @@ public class UserInfoActivity extends AppCompatActivity {
 		View contentView = getLayoutInflater().inflate(R.layout.pop_add_friend,null);
 		EditText et_tel = contentView.findViewById(R.id.tel);
 		et_tel.setInputType(InputType.TYPE_CLASS_TEXT);
-		et_tel.setHint("设置好友备注！~");
+		et_tel.setHint("验证消息");
 		Spinner type = contentView.findViewById(R.id.type);
 		type.setVisibility(View.VISIBLE);
 		String[] strSpinnerItems = new String[Datas.getFriendBean().getCategorys().size()];
@@ -268,6 +268,7 @@ public class UserInfoActivity extends AppCompatActivity {
 										ShowUtil.showToast(getApplicationContext(),"添加好友成功");
 										//在这里需要更新UI界面
 										FriendsBean friendsBean = GsonUtil.getGson().fromJson(jb.getString("new_friend"),FriendsBean.class);
+										Datas.getFriendBean().getFriends().add(friendsBean);
 										EventBus.getDefault().postSticky(new FriendEvent(TAG,friendsBean));
 										//向对方推送添加好友请求
 										Msg msg = new Msg();
@@ -283,7 +284,12 @@ public class UserInfoActivity extends AppCompatActivity {
 										//关闭当前页面
 										finish();
 									}else {
-										Snackbar.make(myView,"该用户不存在！", Snackbar.LENGTH_SHORT).show();
+										String str = jb.getString("msg");
+										if (str.equals("该用户已经是你的好友了哦")){
+											Snackbar.make(myView,"该用户已经是你的好友了哦", Snackbar.LENGTH_SHORT).show();
+										}else{
+											Snackbar.make(myView,"该用户不存在", Snackbar.LENGTH_SHORT).show();
+										}
 									}
 								} catch (JSONException e) {
 									e.printStackTrace();

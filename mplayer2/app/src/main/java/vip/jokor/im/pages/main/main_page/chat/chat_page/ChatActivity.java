@@ -536,7 +536,7 @@ public class ChatActivity extends BaseActivity {
 				Log.e(TAG, "onOptionsItemSelected: 点击右上角菜单" +session.getToId());
 				if (Datas.getFriendBean()!=null && Datas.getFriendBean().getFriends()!=null){
 					for (int i=0;i<Datas.getFriendBean().getFriends().size();i++){
-						Log.e(TAG, "onOptionsItemSelected: 点击右上角菜单编号" +GsonUtil.getGson().toJson(Datas.getFriendBean().getFriends().get(i).getFriend().getId()));
+						Log.e(TAG, "onOptionsItemSelected: 点击右上角菜单编号" +GsonUtil.getGson().toJson(Datas.getFriendBean().getFriends().get(i).getFriend()));
 						if (Datas.getFriendBean().getFriends().get(i).getFriend().getId() == session.getToId()){
 							Intent intent = new Intent(ChatActivity.this, UserInfoActivity.class);
 							String strUser = GsonUtil.getGson().toJson(Datas.getFriendBean().getFriends().get(i).getFriend());

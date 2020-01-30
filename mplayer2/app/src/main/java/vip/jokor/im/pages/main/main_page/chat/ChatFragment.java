@@ -31,11 +31,13 @@ import vip.jokor.im.R;
 import vip.jokor.im.base.Datas;
 import vip.jokor.im.im.MsgEvent;
 import vip.jokor.im.model.DataManager;
+import vip.jokor.im.model.bean.FriendsBean;
 import vip.jokor.im.model.bean.GroupBean;
 import vip.jokor.im.model.bean.UserBean;
 import vip.jokor.im.model.db.DBManager;
 import vip.jokor.im.model.db.Msg;
 import vip.jokor.im.model.db.Session;
+import vip.jokor.im.model.db.Session_;
 import vip.jokor.im.pages.main.MainActivity;
 import vip.jokor.im.pages.main.main_page.chat.chat_page.ChatActivity;
 import vip.jokor.im.pages.main.main_page.friends.DelFriendEvent;
@@ -51,6 +53,8 @@ import com.kymjs.rxvolley.client.HttpCallback;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -227,9 +231,26 @@ public class ChatFragment extends Fragment {
 			convertView.setOnClickListener(v -> {
 				item.setTmpMsgCount(0);
 				notifyDataSetChanged();
-				DBManager.getInstance().getSessionBox().put(item);
-				intent.putExtra("session", GsonUtil.getGson().toJson(item));
-				startActivity(intent);
+				Session session = DBManager.getInstance().getSessionBox().query()
+						.equal(Session_.Belong, Datas.getUserInfo().getId())
+						.equal(Session_.msgFrom, item.getMsgFrom())
+						.equal(Session_.toId, item.getToId())
+						.build()
+						.findFirst();
+
+				if (session !=null ){
+					session.setTmpMsgCount(0);
+					DBManager.getInstance().getSessionBox().put(session);
+					Log.e(TAG, "getView: 保存会话 "+GsonUtil.getGson().toJson(session) );
+					intent.putExtra("session", GsonUtil.getGson().toJson(session));
+					startActivity(intent);
+				}else {
+					Log.e(TAG, "getView: 保存会话 "+GsonUtil.getGson().toJson(item) );
+					DBManager.getInstance().getSessionBox().put(item);
+					intent.putExtra("session", GsonUtil.getGson().toJson(item));
+					startActivity(intent);
+				}
+
 			});
 			return convertView;
 		}
@@ -255,45 +276,77 @@ public class ChatFragment extends Fragment {
 	public void update(MsgEvent event){
 		Log.i(TAG, "update: "+GsonUtil.getGson().toJson(event));
 		ThreadUtil.startThreadInPool(() -> {
-			Session session = null;
-			Msg msg = event.getMsg();
-			Log.i(TAG, "update: msg  "+GsonUtil.getGson().toJson(msg));
-			for (Session item :sessions){
-				Log.i(TAG, "update: session "+GsonUtil.getGson().toJson(item));
-				if ( item.getMsgFrom()  == msg.getMsgFrom() && (item.getToId() == msg.getToId() || item.getToId() == msg.getFromId()) ){
-					session = item;
-					sessions.remove(item);
-					sessions.add(0,session);
-					Log.i(TAG, "update: 会话存在");
-					break;
+			if (event.getMsg().getMsgUsed() == Msg.MSG_USED_CHAT){
+				Session session = null;
+				Msg msg = event.getMsg();
+				Log.i(TAG, "update: msg  "+GsonUtil.getGson().toJson(msg));
+				for (Session item :sessions){
+					Log.i(TAG, "update: session "+GsonUtil.getGson().toJson(item));
+					if ( item.getMsgFrom()  == msg.getMsgFrom() && (item.getToId() == msg.getToId() || item.getToId() == msg.getFromId()) ){
+						session = item;
+						sessions.remove(item);
+						sessions.add(0,session);
+						Log.i(TAG, "update: 会话存在");
+						break;
+					}
 				}
-			}
-			if (session==null){
-				Log.i(TAG, "update: 会话不存在，开始新建会话！");
-				if (msg.getFromId() == Datas.getUserInfo().getId()){
-					//消息是自己发的
-					long userId = msg.getToId();
-					session = new Session();
-					//加载名称和头像
-					switch (msg.getMsgFrom()){
-						case Msg.MSG_FROM_FRIEND:
-							HttpCallback callback = new HttpCallback() {
-								@Override
-								public void onSuccess(String t) {
-									Log.e(TAG, "loadUserInfo onSuccess: "+t );
-								}
+				if (session==null){
+					Log.i(TAG, "update: 会话不存在，开始新建会话！");
+					if (msg.getFromId() == Datas.getUserInfo().getId()){
+						//消息是自己发的
+						long userId = msg.getToId();
+						session = new Session();
+						//加载名称和头像
+						switch (msg.getMsgFrom()){
+							case Msg.MSG_FROM_FRIEND:
+								HttpCallback callback = new HttpCallback() {
+									@Override
+									public void onSuccess(String t) {
+										Log.e(TAG, "loadUserInfo onSuccess: "+t );
+										try {
+											JSONObject jb = new JSONObject(t);
+											JSONObject jUser = jb.getJSONObject("user");
+											String username = jUser.getString("UserName");
+											String icon = jUser.getString("Icon");
+											for (Session item :sessions){
+												if ( item.getMsgFrom()  == msg.getMsgFrom() && (item.getToId() == msg.getToId() || item.getToId() == msg.getFromId()) ){
+													item.setUserName(username);
+													item.setIcon(icon);
+													if (getActivity()!=null){
+														getActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
+													}
+													break;
+												}
+											}
+											Session session = DBManager.getInstance().getSessionBox().query()
+													.equal(Session_.Belong, Datas.getUserInfo().getId())
+													.equal(Session_.msgFrom, msg.getMsgFrom())
+													.equal(Session_.toId, msg.getFromId())
+													.or()
+													.equal(Session_.toId, msg.getToId())
+													.build()
+													.findFirst();
+											session.setUserName(username);
+											session.setIcon(icon);
+											Log.e(TAG, "onSuccess: 保存会话"+GsonUtil.getGson().toJson(session) );
+											DBManager.getInstance().getSessionBox().put(session);
+										} catch (JSONException e) {
+											e.printStackTrace();
+										}
+									}
 
-								@Override
-								public void onFailure(int errorNo, String strMsg) {
-									Log.e(TAG,  "loadUserInfo onFailure: "+errorNo+strMsg );
-								}
-							};
-							UserBean user = UserPresenter.getInstance().loadUserInfo(userId,callback);
-							if (user!=null){
-								session.setIcon(user.getIcon());
-								String strUsername = user.getName();
-								if (strUsername==null || strUsername.equals("")){
-									strUsername = user.getUserName();
+									@Override
+									public void onFailure(int errorNo, String strMsg) {
+										Log.e(TAG,  "loadUserInfo onFailure: "+errorNo+strMsg );
+									}
+								};
+								FriendsBean user = UserPresenter.getInstance().loadUserInfo(userId,callback);
+								if (user!=null){
+									session.setIcon(user.getFriend().getIcon());
+									String strUsername = user.getMsg();
+									if (strUsername==null || strUsername.equals("")){
+										strUsername = user.getFriend().getUserName();
+									}
 									if (strUsername==null || strUsername.equals("")){
 										Random r = new Random(1);
 										int random = r.nextInt(100);
@@ -303,72 +356,71 @@ public class ChatFragment extends Fragment {
 											strUsername = "白脸"+random;
 										}
 									}
+									session.setUserName(strUsername);
 								}
-								session.setUserName(strUsername);
-								session.setId(userId);
 								session.setToId(userId);
-							}
-							break;
-						case Msg.MSG_FROM_GROUP:
-							GroupBean groupBean = GroupPresenter.getInstance().loadGroupInfo(msg);
-							session.setIcon(groupBean.getIcon());
-							session.setUserName(groupBean.getName());
-							session.setId(groupBean.getId());
-							session.setToId(groupBean.getId());
-							break;
+								break;
+							case Msg.MSG_FROM_GROUP:
+								GroupBean groupBean = GroupPresenter.getInstance().loadGroupInfo(msg);
+								session.setIcon(groupBean.getIcon());
+								session.setUserName(groupBean.getName());
+								session.setId(groupBean.getId());
+								session.setToId(groupBean.getId());
+								break;
+						}
+						session.setMsgFrom(event.getMsg().getMsgFrom());
+						session.setBelong(Datas.getUserInfo().getId());
+						session.setTmpTime(event.getMsg().getCreateTime());
+						session.setMsg(event.getMsg().getUsername());
+						sessions.add(0,session);
+					}else {
+						session = new Session();
+						//加载名称和头像
+						switch (msg.getMsgFrom()){
+							case Msg.MSG_FROM_FRIEND:
+								session.setIcon(msg.getIcon());
+								session.setUserName(msg.getUsername());
+								if (msg.getToId() == Datas.getUserInfo().getId()){
+									session.setId(msg.getFromId());
+									session.setToId(msg.getFromId());
+								}
+								if (msg.getFromId() == Datas.getUserInfo().getId()){
+									session.setId(msg.getToId());
+									session.setToId(msg.getToId());
+								}
+								break;
+							case Msg.MSG_FROM_GROUP:
+								GroupBean groupBean = GroupPresenter.getInstance().loadGroupInfo(msg);
+								session.setIcon(groupBean.getIcon());
+								session.setUserName(groupBean.getName());
+								session.setId(groupBean.getId());
+								session.setToId(groupBean.getId());
+								break;
+						}
+						session.setMsgFrom(event.getMsg().getMsgFrom());
+						session.setBelong(Datas.getUserInfo().getId());
+						session.setTmpTime(event.getMsg().getCreateTime());
+						session.setMsg(event.getMsg().getUsername());
+						sessions.add(0,session);
 					}
-					session.setMsgFrom(event.getMsg().getMsgFrom());
-					session.setBelong(Datas.getUserInfo().getId());
-					session.setTmpTime(event.getMsg().getCreateTime());
-					session.setMsg(event.getMsg().getUsername());
-					sessions.add(0,session);
-				}else {
-					session = new Session();
-					//加载名称和头像
-					switch (msg.getMsgFrom()){
-						case Msg.MSG_FROM_FRIEND:
-							session.setIcon(msg.getIcon());
-							session.setUserName(msg.getUsername());
-							if (msg.getToId() == Datas.getUserInfo().getId()){
-								session.setId(msg.getFromId());
-								session.setToId(msg.getFromId());
-							}
-							if (msg.getFromId() == Datas.getUserInfo().getId()){
-								session.setId(msg.getToId());
-								session.setToId(msg.getToId());
-							}
-							break;
-						case Msg.MSG_FROM_GROUP:
-							GroupBean groupBean = GroupPresenter.getInstance().loadGroupInfo(msg);
-							session.setIcon(groupBean.getIcon());
-							session.setUserName(groupBean.getName());
-							session.setId(groupBean.getId());
-							session.setToId(groupBean.getId());
-							break;
-					}
-					session.setMsgFrom(event.getMsg().getMsgFrom());
-					session.setBelong(Datas.getUserInfo().getId());
-					session.setTmpTime(event.getMsg().getCreateTime());
-					session.setMsg(event.getMsg().getUsername());
-					sessions.add(0,session);
+					Log.i(TAG, "update: 会话初始化完毕");
 				}
-				Log.i(TAG, "update: 会话初始化完毕");
-			}
 
-			session.setTmpTime(event.getMsg().getCreateTime());
-			switch (event.getMsg().getMsgType()){
-				case Msg.MSG_TYPE_TEXT:session.setTmpMsg(event.getMsg().getData());break;
-				case Msg.MSG_TYPE_IMG:session.setTmpMsg("[图片]");break;
-				case Msg.MSG_TYPE_AUDIO:session.setTmpMsg("[语音]");break;
-				case Msg.MSG_TYPE_VIDEO:session.setTmpMsg("[视频]");break;
-			}
-			if (event.getMsg().getFromId() == Datas.getUserInfo().getId()){
-				//自己发的消息就不要设置未读消息了
-				session.setTmpMsgCount(0);
-			}else {
-				if (session.getTmpMsgCount()<=0){ session.setTmpMsgCount(1); }
-				else if (session.getTmpMsgCount()>=99){session.setTmpMsgCount(99);}
-				else { session.setTmpMsgCount(session.getTmpMsgCount()+1);}
+				session.setTmpTime(event.getMsg().getCreateTime());
+				switch (event.getMsg().getMsgType()){
+					case Msg.MSG_TYPE_TEXT:session.setTmpMsg(event.getMsg().getData());break;
+					case Msg.MSG_TYPE_IMG:session.setTmpMsg("[图片]");break;
+					case Msg.MSG_TYPE_AUDIO:session.setTmpMsg("[语音]");break;
+					case Msg.MSG_TYPE_VIDEO:session.setTmpMsg("[视频]");break;
+				}
+				if (event.getMsg().getFromId() == Datas.getUserInfo().getId()){
+					//自己发的消息就不要设置未读消息了
+					session.setTmpMsgCount(0);
+				}else {
+					if (session.getTmpMsgCount()<=0){ session.setTmpMsgCount(1); }
+					else if (session.getTmpMsgCount()>=99){session.setTmpMsgCount(99);}
+					else { session.setTmpMsgCount(session.getTmpMsgCount()+1);}
+				}
 			}
 		});
 		if (getActivity()!=null){

@@ -28,6 +28,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import vip.jokor.im.R;
 import vip.jokor.im.base.BaseActivity;
+import vip.jokor.im.base.Config;
 import vip.jokor.im.base.Datas;
 import vip.jokor.im.pages.main.main_page.friends.NewFriendEvent;
 import vip.jokor.im.pages.util.SettingActivity;
@@ -41,6 +42,7 @@ import vip.jokor.im.pages.main.main_page.search.SearchActivity;
 import vip.jokor.im.pages.main.main_page.square.SquareFragment;
 import vip.jokor.im.presenter.MainPresenter;
 import vip.jokor.im.util.base.GsonUtil;
+import vip.jokor.im.util.base.PreferenceUtil;
 import vip.jokor.im.util.base.StatusBarUtil;
 import vip.jokor.im.wedgit.util.QrCodeUtil;
 import vip.jokor.im.util.glide.MediaLoader;
@@ -161,7 +163,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 		//添加到Tab上
 		tab2.addView(badge2);
 		circle2 = badge2.findViewById(R.id.circle);
-		circle2.setVisibility(View.GONE);
+
+		if (Config.isShowTab0()){
+			circle0.setVisibility(View.VISIBLE);
+		}else{
+			circle0.setVisibility(View.GONE);
+		}
+		if (Config.isShowTab1()){
+			circle1.setVisibility(View.VISIBLE);
+		}else{
+			circle1.setVisibility(View.GONE);
+		}
+		if (Config.isShowTab2()){
+			circle2.setVisibility(View.VISIBLE);
+		}else{
+			circle2.setVisibility(View.GONE);
+		}
 
 		pager = findViewById(R.id.pager);
 		BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = item -> {
@@ -280,11 +297,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 		if (!flag){
 			ShowUtil.sendSimpleNotification(getApplicationContext(),"新朋友",event.getUsername()+" 请求添加好友");
 			MainActivity.this.runOnUiThread(() -> {
-				circle2.setVisibility(View.VISIBLE);
+				Config.setTab2(true);
+				if (circle2!=null){
+					circle2.setVisibility(View.VISIBLE);
+				}
 			});
 
 		}else {
 			Log.e(TAG, "update: 添加好友好友已经存在" );
 		}
+	}
+
+	public void disableRedCircle2(){
+		circle2.setVisibility(View.GONE);
 	}
 }

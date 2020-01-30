@@ -220,7 +220,6 @@ public class ChatPresenter {
     public void clearSessionCount(Session session){
         if (session.getTmpMsgCount()!=0)session.setTmpMsgCount(0);
         DBManager.getInstance().getSessionBox().put(session);
-
     }
 
 }

@@ -198,7 +198,7 @@ public class CreateArticleActivity extends AppCompatActivity {
                                     .maxSelectable(1)
                                     //这两行要连用 是否在选择图片中展示照相 和适配安卓7.0 fileProvider
                                     .capture(true)
-                                    .captureStrategy(new CaptureStrategy(true,"com.jokor.im.fileProvider"))
+                                    .captureStrategy(new CaptureStrategy(true,"vip.jokor.im.fileProvider"))
                                     .theme(R.style.Matisse_Dracula)
                                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                                     .thumbnailScale(0.85f)

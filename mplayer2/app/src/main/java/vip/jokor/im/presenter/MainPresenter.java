@@ -84,7 +84,7 @@ public class MainPresenter {
         public void handleMessage(@NonNull Message msg) {
             if (!ServiceUtil.isServiceRunning(context, "MsgService")){
                 //在这里要监控APP是否前台运行，在前台运行就启动service
-                context.startService(new Intent(context, MsgService.class));
+                 context.startService(new Intent(context, MsgService.class));
             }else {Log.e(TAG, "run: MsgService 正在运行" );}
         }
     };
@@ -187,16 +187,13 @@ public class MainPresenter {
         if ( session == null ){
             session = new Session() ;
             session.setDataFromFriendsBean(friendsBean) ;
-            if (isNewFriend){
-                session.setTmpMsg("新朋友");
-                session.setTmpMsgCount(1);
-                ChatPresenter.getInstance().senTextdMsg(session,"你好");
-            }else {
-                session.setTmpMsg("");
-                session.setTmpMsgCount(-1);
-            }
+            session.setTmpMsg("");
+            session.setTmpMsgCount(-1);
             session.setTmpTime(new Date(System.currentTimeMillis()));
             sessionBox.put(session);
+        }
+        if (isNewFriend){
+            ChatPresenter.getInstance().senTextdMsg(session,"你好");
         }
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra(ChatActivity.CHAT_TYPE, Msg.MSG_FROM_FRIEND);
