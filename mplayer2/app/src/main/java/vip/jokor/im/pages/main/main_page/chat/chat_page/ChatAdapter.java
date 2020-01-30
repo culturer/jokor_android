@@ -264,25 +264,28 @@ public class ChatAdapter extends BaseAdapter {
 	}
 	
 	public void update(Msg msg){
-	    if (session == null){
-            Log.i(TAG, "update: 传入的session 对象有问题 ！");
-        }
-		if (msg!=null && session!=null){
-			boolean flag = false;
-            if (!(msg.getFromId() == session.getToId() || msg.getToId() == session.getToId())){
-                flag = true;
-                Log.i(TAG, "不是属于当前会话的消息！");
-            }
-			for (Msg item : msgs) {
-				if (item.getMsgId().equals(msg.getMsgId())){
-				    flag = true;
-                    Log.i(TAG, " 消息: ["+msg.getId()+"] 已经存在");
-				    break;
-                }
+		if (msg.getMsgUsed() == Msg.MSG_USED_CHAT){
+			if (session == null){
+				Log.i(TAG, "update: 传入的session 对象有问题 ！");
 			}
-			if (!flag){
-				msgs.add(msg);
-				activity.runOnUiThread(this::notifyDataSetChanged);
+			if (session != null){
+				boolean flag = false;
+				if (!(msg.getFromId() == session.getToId() || msg.getToId() == session.getToId())){
+					flag = true;
+					Log.i(TAG, "不是属于当前会话的消息！");
+				}
+				if ( msgs==null )msgs = new ArrayList<>();
+				for (Msg item : msgs) {
+					if (item.getMsgId().equals(msg.getMsgId())){
+						flag = true;
+						Log.i(TAG, " 消息: ["+msg.getId()+"] 已经存在");
+						break;
+					}
+				}
+				if (!flag){
+					msgs.add(msg);
+					activity.runOnUiThread(this::notifyDataSetChanged);
+				}
 			}
 		}
 	}

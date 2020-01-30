@@ -239,6 +239,8 @@ public class ChatFragment extends Fragment {
 						.findFirst();
 
 				if (session !=null ){
+					session.setUserName(item.getUserName());
+					session.setIcon(item.getIcon());
 					session.setTmpMsgCount(0);
 					DBManager.getInstance().getSessionBox().put(session);
 					Log.e(TAG, "getView: 保存会话 "+GsonUtil.getGson().toJson(session) );
@@ -274,14 +276,14 @@ public class ChatFragment extends Fragment {
 
 	@Subscribe
 	public void update(MsgEvent event){
-		Log.i(TAG, "update: "+GsonUtil.getGson().toJson(event));
+		Log.e(TAG, "update: "+GsonUtil.getGson().toJson(event));
 		ThreadUtil.startThreadInPool(() -> {
 			if (event.getMsg().getMsgUsed() == Msg.MSG_USED_CHAT){
 				Session session = null;
 				Msg msg = event.getMsg();
 				Log.i(TAG, "update: msg  "+GsonUtil.getGson().toJson(msg));
 				for (Session item :sessions){
-					Log.i(TAG, "update: session "+GsonUtil.getGson().toJson(item));
+					Log.e(TAG, "update: session "+GsonUtil.getGson().toJson(item));
 					if ( item.getMsgFrom()  == msg.getMsgFrom() && (item.getToId() == msg.getToId() || item.getToId() == msg.getFromId()) ){
 						session = item;
 						sessions.remove(item);
@@ -291,7 +293,7 @@ public class ChatFragment extends Fragment {
 					}
 				}
 				if (session==null){
-					Log.i(TAG, "update: 会话不存在，开始新建会话！");
+					Log.e(TAG, "update: 会话不存在，开始新建会话！");
 					if (msg.getFromId() == Datas.getUserInfo().getId()){
 						//消息是自己发的
 						long userId = msg.getToId();

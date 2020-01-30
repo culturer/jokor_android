@@ -41,7 +41,7 @@ public class Session {
         this.Sort = friendsBean.getSort();
         this.Msg = friendsBean.getMsg();
         this.Belong = friendsBean.getBelong();
-        if (friendsBean.getMsg()==null || friendsBean.getMsg().equals("")){
+        if (friendsBean.getMsg()==null && friendsBean.getMsg().equals("")){
             this.UserName = friendsBean.getMsg();
         }else {
             this.UserName = friendsBean.getFriend().getUserName();

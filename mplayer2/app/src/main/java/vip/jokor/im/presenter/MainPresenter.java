@@ -180,6 +180,7 @@ public class MainPresenter {
 
     //创建单聊会话
     public void openP2PSession(FriendsBean friendsBean, Context context,boolean isNewFriend){
+        Log.e(TAG, "openP2PSession: 打开会话页面" );
         //1.查询数据库，如果有则直接打开
         //2.如果没有就创建后打开
         Box<Session> sessionBox =  DBManager.getInstance().getSessionBox();
@@ -190,6 +191,7 @@ public class MainPresenter {
             session.setTmpMsg("");
             session.setTmpMsgCount(-1);
             session.setTmpTime(new Date(System.currentTimeMillis()));
+            Log.e(TAG, "openP2PSession: 保存会话"+GsonUtil.getGson().toJson(session) );
             sessionBox.put(session);
         }
         if (isNewFriend){

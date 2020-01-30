@@ -51,7 +51,7 @@ public class ChatPresenter {
         msg.setMsgId("u"+Datas.getUserInfo().getId()+"_"+System.currentTimeMillis());
         msg.setUsername(Datas.getUserInfo().getUserName());
         msg.setCreateTime(new Date());
-        Log.i(TAG, "senTextdMsg: FromId [ "+Datas.getUserInfo().getId()+" ] ToId"+" [ "+session.getToId()+" ] ");
+        Log.e(TAG, "senTextdMsg: FromId [ "+Datas.getUserInfo().getId()+" ] ToId"+" [ "+session.getToId()+" ] ");
         EventBus.getDefault().postSticky(new MsgEvent(TAG+".senTextdMsg",msg));
         return msg;
     }
@@ -214,7 +214,10 @@ public class ChatPresenter {
     }
 
     public void removeSession(Session session){
+        //删除会话
         DBManager.getInstance().getSessionBox().remove(session);
+        //删除聊天记录
+        DBManager.getInstance().getMsgBox().remove(DBManager.getInstance().getMsgBox().query().equal(Msg_.fromId,session.getToId()).or().equal(Msg_.toId,session.getToId()).build().findIds());
     }
 
     public void clearSessionCount(Session session){
