@@ -215,11 +215,7 @@ public class ChatFragment extends Fragment {
 			//单聊
 			if (item.getMsgFrom() == Msg.MSG_FROM_FRIEND){
 				intent.putExtra(CHAT_TYPE, Msg.MSG_FROM_FRIEND);
-				if (item.getMsg() == null || item.getMsg().equals("")){
-					name.setText(item.getUserName());
-				}else {
-					name.setText(item.getMsg());
-				}
+				name.setText(item.getUserName());
 				label.setText("vip");
 			}
 			//群聊
@@ -373,15 +369,13 @@ public class ChatFragment extends Fragment {
 						session.setMsgFrom(event.getMsg().getMsgFrom());
 						session.setBelong(Datas.getUserInfo().getId());
 						session.setTmpTime(event.getMsg().getCreateTime());
-						session.setMsg(event.getMsg().getUsername());
+						session.setUserName(event.getMsg().getUsername());
 						sessions.add(0,session);
 					}else {
 						session = new Session();
 						//加载名称和头像
 						switch (msg.getMsgFrom()){
 							case Msg.MSG_FROM_FRIEND:
-								session.setIcon(msg.getIcon());
-								session.setUserName(msg.getUsername());
 								if (msg.getToId() == Datas.getUserInfo().getId()){
 									session.setId(msg.getFromId());
 									session.setToId(msg.getFromId());
@@ -402,7 +396,7 @@ public class ChatFragment extends Fragment {
 						session.setMsgFrom(event.getMsg().getMsgFrom());
 						session.setBelong(Datas.getUserInfo().getId());
 						session.setTmpTime(event.getMsg().getCreateTime());
-						session.setMsg(event.getMsg().getUsername());
+						session.setUserName(event.getMsg().getUsername());
 						sessions.add(0,session);
 					}
 					Log.i(TAG, "update: 会话初始化完毕");

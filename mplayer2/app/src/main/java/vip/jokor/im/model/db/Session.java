@@ -18,7 +18,6 @@ public class Session {
     @Id(assignable = true)
     private long Id;            //编号
     private int Sort;           //排序
-    private String Msg;         //备注
     private long Belong;        //用户编号
     private long toId;          //用户编号
     private String UserName;
@@ -39,7 +38,6 @@ public class Session {
         this.toId = friendsBean.getFriend().getId();
         this.Id = friendsBean.getFriend().getId();
         this.Sort = friendsBean.getSort();
-        this.Msg = friendsBean.getMsg();
         this.Belong = friendsBean.getBelong();
         if (friendsBean.getMsg()==null && friendsBean.getMsg().equals("")){
             this.UserName = friendsBean.getMsg();
@@ -56,7 +54,6 @@ public class Session {
         this.toId = groupBean.getId();
         this.Id = groupBean.getId();
         this.Sort = 0;
-        this.Msg = groupBean.getMsg();
         this.Belong = Datas.getUserInfo().getId();
         this.UserName = groupBean.getName();
         this.Icon = groupBean.getIcon();
@@ -79,13 +76,6 @@ public class Session {
         Sort = sort;
     }
 
-    public String getMsg() {
-        return Msg;
-    }
-
-    public void setMsg(String msg) {
-        Msg = msg;
-    }
 
     public long getBelong() {
         return Belong;
