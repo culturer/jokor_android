@@ -110,7 +110,6 @@ public class FriendsFragment extends Fragment {
 	private void initNewFriends(){
 		View new_friend = contentView.findViewById(R.id.new_friend);
 		new_friend.setOnClickListener(v -> {
-			Config.setTab2(false);
 			circle.setVisibility(View.GONE);
 			if(getActivity()instanceof MainActivity){
 				((MainActivity)getActivity()).disableRedCircle2();
@@ -248,7 +247,9 @@ public class FriendsFragment extends Fragment {
 		if (!flag){
 			ShowUtil.sendSimpleNotification(getContext(),"新朋友",event.getUsername()+" 请求添加好友");
 			getActivity().runOnUiThread(() -> {
-				Config.setTab0(true);
+				if(getActivity()instanceof MainActivity){
+					((MainActivity)getActivity()).showRedCircle2();
+				}
 				circle.setVisibility(View.VISIBLE);
 			});
 		}else {

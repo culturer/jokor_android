@@ -82,7 +82,7 @@ public class MainPresenter {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
-            if (!ServiceUtil.isServiceRunning(context, "MsgService")){
+            if (!ServiceUtil.isServiceRunning(context, "MsgService") && ServiceUtil.isOnForground(context)){
                 //在这里要监控APP是否前台运行，在前台运行就启动service
                  context.startService(new Intent(context, MsgService.class));
             }else {Log.e(TAG, "run: MsgService 正在运行" );}

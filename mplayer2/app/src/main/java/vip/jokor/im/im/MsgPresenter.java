@@ -97,6 +97,8 @@ public class MsgPresenter {
             //自己发的消息就不要设置未读消息了
             session.setTmpMsgCount(0);
         }else {
+            session.setUserName(msg.getUsername());
+            session.setIcon(msg.getIcon());
             if (session.getTmpMsgCount()<=0){ session.setTmpMsgCount(1); }
             else if (session.getTmpMsgCount()>=99){session.setTmpMsgCount(99);}
             else { session.setTmpMsgCount(session.getTmpMsgCount()+1);}

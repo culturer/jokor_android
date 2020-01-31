@@ -23,16 +23,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import vip.jokor.im.R;
 import vip.jokor.im.base.BaseActivity;
 import vip.jokor.im.base.Config;
 import vip.jokor.im.base.Datas;
-import vip.jokor.im.pages.main.main_page.friends.NewFriendEvent;
 import vip.jokor.im.pages.util.SettingActivity;
-import vip.jokor.im.pages.util.article.ArticleEvent;
 import vip.jokor.im.pages.util.userinfo.UserInfoActivity;
 import vip.jokor.im.pages.main.main_page.chat.ChatFragment;
 import vip.jokor.im.pages.main.main_page.friends.ConfirmActivity;
@@ -42,7 +38,6 @@ import vip.jokor.im.pages.main.main_page.search.SearchActivity;
 import vip.jokor.im.pages.main.main_page.square.SquareFragment;
 import vip.jokor.im.presenter.MainPresenter;
 import vip.jokor.im.util.base.GsonUtil;
-import vip.jokor.im.util.base.PreferenceUtil;
 import vip.jokor.im.util.base.StatusBarUtil;
 import vip.jokor.im.wedgit.util.QrCodeUtil;
 import vip.jokor.im.util.glide.MediaLoader;
@@ -90,7 +85,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 			startActivity(intent);
 			finish();
 		}
-		EventBus.getDefault().register(this);
 	}
 
 	@Override
@@ -137,17 +131,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 	private void initPage(){
 		navigation = findViewById(R.id.navigation);
+
 		//获取整个的NavigationView
 		BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
+
 		//这里就是获取所添加的每一个Tab(或者叫menu)，
-		View tab = menuView.getChildAt(0);
-		BottomNavigationItemView tab0 = (BottomNavigationItemView) tab;
+		BottomNavigationItemView tab0 = (BottomNavigationItemView) menuView.getChildAt(0);
 		//加载我们的角标View，新创建的一个布局
 		View badge = LayoutInflater.from(this).inflate(R.layout.main_bottom_circle_red, menuView, false);
 		//添加到Tab上
 		tab0.addView(badge);
 		circle0 = badge.findViewById(R.id.circle);
-		circle0.setVisibility(View.GONE);
 
 		BottomNavigationItemView tab1 = (BottomNavigationItemView) menuView.getChildAt(1);
 		//加载我们的角标View，新创建的一个布局
@@ -155,7 +149,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 		//添加到Tab上
 		tab1.addView(badge1);
 		circle1 = badge1.findViewById(R.id.circle);
-		circle1.setVisibility(View.GONE);
 
 		BottomNavigationItemView tab2 = (BottomNavigationItemView) menuView.getChildAt(2);
 		//加载我们的角标View，新创建的一个布局
@@ -285,30 +278,33 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 		startActivity(intent);
 	}
 
-	@Subscribe
-	public void update(NewFriendEvent event){
-		boolean flag = false;
-		for (int i=0;i<Datas.getFriendBean().getFriends().size();i++){
-			if (Datas.getFriendBean().getFriends().get(i).getFriend().getId() == event.getUserId()){
-				flag = true;
-				break;
-			}
-		}
-		if (!flag){
-			ShowUtil.sendSimpleNotification(getApplicationContext(),"新朋友",event.getUsername()+" 请求添加好友");
-			MainActivity.this.runOnUiThread(() -> {
-				Config.setTab2(true);
-				if (circle2!=null){
-					circle2.setVisibility(View.VISIBLE);
-				}
-			});
+	public void showRedCircle0(){
+		Config.setTab0(true);
+		runOnUiThread(() -> circle0.setVisibility(View.VISIBLE));
+	}
 
-		}else {
-			Log.e(TAG, "update: 添加好友好友已经存在" );
-		}
+	public void showRedCircle1(){
+		Config.setTab1(true);
+		runOnUiThread(() -> circle1.setVisibility(View.VISIBLE));
+	}
+
+	public void showRedCircle2(){
+		Config.setTab2(true);
+		runOnUiThread(() -> circle2.setVisibility(View.VISIBLE));
+	}
+
+	public void disableRedCircle0(){
+		Config.setTab0(false);
+		runOnUiThread(() -> circle0.setVisibility(View.GONE));
+	}
+
+	public void disableRedCircle1(){
+		Config.setTab1(false);
+		runOnUiThread(() -> circle1.setVisibility(View.GONE));
 	}
 
 	public void disableRedCircle2(){
-		circle2.setVisibility(View.GONE);
+		Config.setTab2(false);
+		runOnUiThread(() -> circle2.setVisibility(View.GONE));
 	}
 }

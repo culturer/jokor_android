@@ -28,6 +28,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 
 import vip.jokor.im.R;
+import vip.jokor.im.base.Config;
 import vip.jokor.im.base.Datas;
 import vip.jokor.im.im.MsgEvent;
 import vip.jokor.im.model.DataManager;
@@ -140,8 +141,8 @@ public class ChatFragment extends Fragment {
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 				Session session = adapter.getItem(i);
 				session.setTmpMsgCount(0);
-				presenter.clearSessionCount(session);
 				adapter.notifyDataSetChanged();
+				presenter.clearSessionCount(session);
 			}
 		});
 	}
@@ -182,13 +183,13 @@ public class ChatFragment extends Fragment {
 			TextView msg = convertView.findViewById(R.id.msg);
 			TextView count = convertView.findViewById(R.id.count);
 			TextView label = convertView.findViewById(R.id.label);
-
 			Session item = getItem(position);
 
 			Glide.with(getContext())
 					.load(item.getIcon())
 					.apply(options)
 					.into(icon);
+
 			//发送时间
 			if (item.getTmpTime() == null){
 				time.setText("");
@@ -226,6 +227,7 @@ public class ChatFragment extends Fragment {
 			}
 			convertView.setOnClickListener(v -> {
 				item.setTmpMsgCount(0);
+				checkDisRedCircle();
 				notifyDataSetChanged();
 				Session session = DBManager.getInstance().getSessionBox().query()
 						.equal(Session_.Belong, Datas.getUserInfo().getId())
@@ -242,12 +244,12 @@ public class ChatFragment extends Fragment {
 					DBManager.getInstance().getSessionBox().put(session);
 					Log.e(TAG, "getView: 保存会话 "+GsonUtil.getGson().toJson(session) );
 					intent.putExtra("session", GsonUtil.getGson().toJson(session));
-					startActivity(intent);
+					startActivityForResult(intent,0);
 				}else {
 					Log.e(TAG, "getView: 保存会话 "+GsonUtil.getGson().toJson(item) );
 					DBManager.getInstance().getSessionBox().put(item);
 					intent.putExtra("session", GsonUtil.getGson().toJson(item));
-					startActivity(intent);
+					startActivityForResult(intent,0);
 				}
 
 			});
@@ -288,6 +290,7 @@ public class ChatFragment extends Fragment {
 						Log.i(TAG, "update: 会话存在");
 						break;
 					}
+
 				}
 				if (session==null){
 					Log.e(TAG, "update: 会话不存在，开始新建会话！");
@@ -417,6 +420,8 @@ public class ChatFragment extends Fragment {
 					//自己发的消息就不要设置未读消息了
 					session.setTmpMsgCount(0);
 				}else {
+					session.setUserName(msg.getUsername());
+					session.setIcon(msg.getIcon());
 					if (session.getTmpMsgCount()<=0){ session.setTmpMsgCount(1); }
 					else if (session.getTmpMsgCount()>=99){session.setTmpMsgCount(99);}
 					else { session.setTmpMsgCount(session.getTmpMsgCount()+1);}
@@ -424,7 +429,45 @@ public class ChatFragment extends Fragment {
 			}
 		});
 		if (getActivity()!=null){
-			getActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
+			getActivity().runOnUiThread(() -> {
+				adapter.notifyDataSetChanged();
+				if ( getActivity()instanceof MainActivity &&
+						!Config.isShowTab1() &&
+						event.getMsg().getFromId() != Datas.getUserInfo().getId()
+				){
+					((MainActivity)getActivity()).showRedCircle1();
+				}
+			});
+
+		}
+	}
+
+	//控制底部小红点状态
+	private void checkShowRedCircle(){
+		if (!Config.isShowTab1() && sessions!=null){
+			for (int i=0;i<sessions.size();i++){
+				if (sessions.get(i).getTmpMsgCount()>0){
+					if(getActivity()instanceof MainActivity){
+						((MainActivity)getActivity()).showRedCircle1();
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	private void checkDisRedCircle(){
+		if (Config.isShowTab1() && sessions!=null){
+			boolean flag = false;
+			for (int i=0;i<sessions.size();i++){
+				if (sessions.get(i).getTmpMsgCount()>0){
+					flag = true;
+					break;
+				}
+			}
+			if ( !flag && getActivity()instanceof MainActivity ) {
+				((MainActivity)getActivity()).disableRedCircle1();
+			}
 		}
 	}
 	
