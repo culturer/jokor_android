@@ -235,6 +235,7 @@ public class ChatFragment extends Fragment {
 						.findFirst();
 
 				if (session !=null ){
+					Log.e(TAG, "getView: 设置会话用户名"+item.getUserName() );
 					session.setUserName(item.getUserName());
 					session.setIcon(item.getIcon());
 					session.setTmpMsgCount(0);
@@ -308,6 +309,7 @@ public class ChatFragment extends Fragment {
 											String icon = jUser.getString("Icon");
 											for (Session item :sessions){
 												if ( item.getMsgFrom()  == msg.getMsgFrom() && (item.getToId() == msg.getToId() || item.getToId() == msg.getFromId()) ){
+													Log.e(TAG, "onSuccess: 设置会话用户名"+username );
 													item.setUserName(username);
 													item.setIcon(icon);
 													if (getActivity()!=null){
@@ -324,6 +326,7 @@ public class ChatFragment extends Fragment {
 													.equal(Session_.toId, msg.getToId())
 													.build()
 													.findFirst();
+											Log.e(TAG, "onSuccess: 设置会话用户名"+username );
 											session.setUserName(username);
 											session.setIcon(icon);
 											Log.e(TAG, "onSuccess: 保存会话"+GsonUtil.getGson().toJson(session) );
@@ -354,6 +357,7 @@ public class ChatFragment extends Fragment {
 											strUsername = "白脸"+random;
 										}
 									}
+									Log.e(TAG, "update: 设置会话用户名 "+strUsername );
 									session.setUserName(strUsername);
 								}
 								session.setToId(userId);
@@ -361,6 +365,7 @@ public class ChatFragment extends Fragment {
 							case Msg.MSG_FROM_GROUP:
 								GroupBean groupBean = GroupPresenter.getInstance().loadGroupInfo(msg);
 								session.setIcon(groupBean.getIcon());
+								Log.e(TAG, "update: 设置会话用户名"+groupBean.getName() );
 								session.setUserName(groupBean.getName());
 								session.setId(groupBean.getId());
 								session.setToId(groupBean.getId());
@@ -369,7 +374,6 @@ public class ChatFragment extends Fragment {
 						session.setMsgFrom(event.getMsg().getMsgFrom());
 						session.setBelong(Datas.getUserInfo().getId());
 						session.setTmpTime(event.getMsg().getCreateTime());
-						session.setUserName(event.getMsg().getUsername());
 						sessions.add(0,session);
 					}else {
 						session = new Session();
@@ -388,6 +392,7 @@ public class ChatFragment extends Fragment {
 							case Msg.MSG_FROM_GROUP:
 								GroupBean groupBean = GroupPresenter.getInstance().loadGroupInfo(msg);
 								session.setIcon(groupBean.getIcon());
+								Log.e(TAG, "update: 设置会话用户名"+groupBean.getName() );
 								session.setUserName(groupBean.getName());
 								session.setId(groupBean.getId());
 								session.setToId(groupBean.getId());
@@ -396,7 +401,6 @@ public class ChatFragment extends Fragment {
 						session.setMsgFrom(event.getMsg().getMsgFrom());
 						session.setBelong(Datas.getUserInfo().getId());
 						session.setTmpTime(event.getMsg().getCreateTime());
-						session.setUserName(event.getMsg().getUsername());
 						sessions.add(0,session);
 					}
 					Log.i(TAG, "update: 会话初始化完毕");
