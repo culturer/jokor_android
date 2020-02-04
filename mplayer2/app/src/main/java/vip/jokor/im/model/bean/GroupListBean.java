@@ -1,5 +1,9 @@
 package vip.jokor.im.model.bean;
 
+import com.chad.library.adapter.base.entity.node.BaseNode;
+
+import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
 
 public class GroupListBean {
@@ -39,7 +43,7 @@ public class GroupListBean {
         this.groups = groups;
     }
 
-    public static class GroupsBean {
+    public static class GroupsBean extends BaseNode {
         /**
          * Id : 1
          * Sort : 0
@@ -94,5 +98,10 @@ public class GroupListBean {
             this.Group = Group;
         }
 
+        @Nullable
+        @Override
+        public List<BaseNode> getChildNode() {
+            return null;
+        }
     }
 }

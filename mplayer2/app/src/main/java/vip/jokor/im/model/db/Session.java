@@ -8,6 +8,7 @@ import java.util.Date;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+import vip.jokor.im.model.bean.GroupListBean;
 
 import static vip.jokor.im.model.db.Msg.MSG_FROM_FRIEND;
 import static vip.jokor.im.model.db.Msg.MSG_FROM_GROUP;
@@ -49,15 +50,19 @@ public class Session {
         this.Grad = friendsBean.getFriend().getGrad();
     }
 
-    public void setDataFromGroupBean(GroupBean groupBean){
+    public void setDataFromGroupBean(GroupListBean.GroupsBean groupBean){
         this.msgFrom = MSG_FROM_GROUP;
         this.toId = groupBean.getId();
         this.Id = groupBean.getId();
         this.Sort = 0;
         this.Belong = Datas.getUserInfo().getId();
-        this.UserName = groupBean.getName();
-        this.Icon = groupBean.getIcon();
-        this.Grad = groupBean.getGrad();
+        if (groupBean.getMsg()!=null && !groupBean.getMsg().equals("")){
+            this.UserName = groupBean.getGroup().getName();
+        }else {
+            this.UserName = groupBean.getMsg();
+        }
+        this.Icon = groupBean.getGroup().getIcon();
+        this.Grad = groupBean.getGroup().getGrad();
     }
 
     public long getId() {

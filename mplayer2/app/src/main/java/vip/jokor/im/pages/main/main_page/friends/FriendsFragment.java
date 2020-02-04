@@ -37,6 +37,7 @@ import vip.jokor.im.model.bean.GroupListBean;
 import vip.jokor.im.pages.main.MainActivity;
 import vip.jokor.im.pages.main.main_page.friends.adapter.NodeTreeAdapter;
 import vip.jokor.im.pages.main.main_page.friends.adapter.tree.FirstNode;
+import vip.jokor.im.pages.main.main_page.friends.adapter.tree.GroupNode;
 import vip.jokor.im.presenter.FriendPresenter;
 import vip.jokor.im.presenter.MainPresenter;
 import vip.jokor.im.pages.main.main_page.group.CreateGroupActivity;
@@ -183,7 +184,7 @@ public class FriendsFragment extends Fragment {
 				Gson gson = GsonUtil.getGson();
 				GetFriendBean friendBean = gson.fromJson(t,GetFriendBean.class);
 				Datas.setFriendBean(friendBean);
-				initList(Datas.getFriendBean(),new ArrayList<>());
+				adapter.addData(0,changeData(friendBean));
 			}
 			@Override
 			public void onFailure(VolleyError error) {
@@ -202,6 +203,13 @@ public class FriendsFragment extends Fragment {
 					if (status == 200){
 						GroupListBean groupListBean = GsonUtil.getGson().fromJson(t, GroupListBean.class);
 						Log.e(TAG, "获取群列表 解析数据 onSuccess: "+GsonUtil.getGson().toJson(groupListBean) );
+						GroupNode groupNode = new GroupNode();
+						List<BaseNode> nodes = new ArrayList<>();
+						if (groupListBean!=null && groupListBean.getGroups()!=null && groupListBean.getGroups().size()>0){
+							nodes.addAll(groupListBean.getGroups());
+						}
+						groupNode.setGroups(nodes);
+						adapter.addData(groupNode);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();

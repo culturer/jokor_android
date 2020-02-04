@@ -31,6 +31,7 @@ import vip.jokor.im.base.Urls;
 import vip.jokor.im.im.MsgService;
 import vip.jokor.im.model.bean.FriendsBean;
 import vip.jokor.im.model.bean.GroupBean;
+import vip.jokor.im.model.bean.GroupListBean;
 import vip.jokor.im.model.db.DBManager;
 import vip.jokor.im.model.db.Session;
 import vip.jokor.im.model.db.Session_;
@@ -203,7 +204,7 @@ public class MainPresenter {
         context.startActivity(intent);
     }
 
-    public void openGroupSession(GroupBean groupBean, Context context){
+    public void openGroupSession(GroupListBean.GroupsBean groupBean, Context context){
         //1.查询数据库，如果有则直接打开
         //2.如果没有就创建后打开
         Box<Session> sessionBox =  DBManager.getInstance().getSessionBox();

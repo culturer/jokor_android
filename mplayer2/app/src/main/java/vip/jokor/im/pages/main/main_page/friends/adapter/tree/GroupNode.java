@@ -7,24 +7,22 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SecondNode extends BaseExpandNode {
+public class GroupNode extends BaseExpandNode {
 
-    private List<BaseNode> childNode;
-    private String title;
+    public List<BaseNode> groups;
 
-    public SecondNode( String title) {
-        this.title = title;
-
-        setExpanded(false);
+    public List<BaseNode> getGroups() {
+        return groups;
     }
 
-    public String getTitle() {
-        return title;
+    public void setGroups(List<BaseNode> groups) {
+        this.groups = groups;
+        setExpanded(false);
     }
 
     @Nullable
     @Override
     public List<BaseNode> getChildNode() {
-        return childNode;
+        return groups;
     }
 }
