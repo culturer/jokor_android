@@ -33,6 +33,7 @@ import vip.jokor.im.base.Datas;
 import vip.jokor.im.model.bean.FriendsBean;
 import vip.jokor.im.model.bean.GetFriendBean;
 import vip.jokor.im.model.bean.GroupBean;
+import vip.jokor.im.model.bean.GroupListBean;
 import vip.jokor.im.pages.main.MainActivity;
 import vip.jokor.im.pages.main.main_page.friends.adapter.NodeTreeAdapter;
 import vip.jokor.im.pages.main.main_page.friends.adapter.tree.FirstNode;
@@ -54,6 +55,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -189,6 +191,29 @@ public class FriendsFragment extends Fragment {
 			}
 		};
 		FriendPresenter.getInstance().getFriemds(callback);
+
+		HttpCallback callback1 = new HttpCallback() {
+			@Override
+			public void onSuccess(String t) {
+				Log.e(TAG, " onSuccess: "+t );
+				try {
+					JSONObject jb = new JSONObject(t);
+					int status = jb.getInt("status");
+					if (status == 200){
+						GroupListBean groupListBean = GsonUtil.getGson().fromJson(t, GroupListBean.class);
+						Log.e(TAG, "获取群列表 解析数据 onSuccess: "+GsonUtil.getGson().toJson(groupListBean) );
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onFailure(VolleyError error) {
+				Log.e(TAG, "获取群列表 onFailure: "+error.getMessage() );
+			}
+		};
+		GroupPresenter.getInstance().getGroups(callback1);
 	}
 	
 	private void initSearch(){

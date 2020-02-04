@@ -93,6 +93,7 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
                 HttpCallback callback = new HttpCallback() {
                     @Override
                     public void onSuccess(String t) {
+                        Log.e(TAG, "修改好友申请状态 onSuccess: "+t );
                         try {
                             JSONObject jb = new JSONObject(t);
                             int status = jb.getInt("status");
@@ -110,7 +111,7 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
                         }
                     }
 
-                    @Override
+                    @Override 
                     public void onFailure(VolleyError error) {
                         ShowUtil.showToast(context,"网络异常！");
                         Log.e(TAG, "onFailure: "+error.getMessage() );
