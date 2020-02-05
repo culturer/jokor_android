@@ -370,7 +370,6 @@ public class ChatFragment extends Fragment {
 								session.setIcon(groupBean.getIcon());
 								Log.e(TAG, "update: 设置会话用户名"+groupBean.getName() );
 								session.setUserName(groupBean.getName());
-								session.setId(groupBean.getId());
 								session.setToId(groupBean.getId());
 								break;
 						}
@@ -384,11 +383,10 @@ public class ChatFragment extends Fragment {
 						switch (msg.getMsgFrom()){
 							case Msg.MSG_FROM_FRIEND:
 								if (msg.getToId() == Datas.getUserInfo().getId()){
-									session.setId(msg.getFromId());
 									session.setToId(msg.getFromId());
 								}
 								if (msg.getFromId() == Datas.getUserInfo().getId()){
-									session.setId(msg.getToId());
+
 									session.setToId(msg.getToId());
 								}
 								break;
@@ -397,7 +395,6 @@ public class ChatFragment extends Fragment {
 								session.setIcon(groupBean.getIcon());
 								Log.e(TAG, "update: 设置会话用户名"+groupBean.getName() );
 								session.setUserName(groupBean.getName());
-								session.setId(groupBean.getId());
 								session.setToId(groupBean.getId());
 								break;
 						}

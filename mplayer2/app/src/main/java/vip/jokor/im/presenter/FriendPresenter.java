@@ -29,10 +29,11 @@ public class FriendPresenter {
 
     }
 
-    public void through(Context context, AppliesBean data, int opt, HttpCallback callback){
+    public void through(long categoryId , long applyId, int opt, HttpCallback callback){
         HttpParams params = new HttpParams();
         params.put("options",CODE_GET_OPTAPPLY);
-        params.put("applyId",""+data.getId());
+        params.put("applyId",""+applyId);
+        params.put("categoryId",""+categoryId);
         params.put("do",opt);
         new RxVolley.Builder()
                 .url(HOST_DATA+USER_PATH)

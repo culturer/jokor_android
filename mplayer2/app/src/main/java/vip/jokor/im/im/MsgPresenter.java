@@ -81,7 +81,6 @@ public class MsgPresenter {
             session.setTmpTime(msg.getCreateTime());
             long userId = msg.getToId();
             if (userId == Datas.getUserInfo().getId()) userId = msg.getFromId();
-            session.setId(userId);
             session.setToId(userId);
         }else {
             Log.e(TAG, "handleUserMsg: 会话存在"+GsonUtil.getGson().toJson(session) );

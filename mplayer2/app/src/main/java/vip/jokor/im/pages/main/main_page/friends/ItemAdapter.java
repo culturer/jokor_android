@@ -1,13 +1,18 @@
 package vip.jokor.im.pages.main.main_page.friends;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,13 +23,22 @@ import com.bumptech.glide.request.RequestOptions;
 
 import vip.jokor.im.R;
 import vip.jokor.im.base.Datas;
+import vip.jokor.im.im.MsgEvent;
 import vip.jokor.im.model.bean.AppliesBean;
+import vip.jokor.im.model.bean.FriendsBean;
+import vip.jokor.im.model.db.Msg;
+import vip.jokor.im.pages.util.userinfo.UserInfoActivity;
 import vip.jokor.im.presenter.FriendPresenter;
+import vip.jokor.im.presenter.MainPresenter;
+import vip.jokor.im.presenter.UserPresenter;
 import vip.jokor.im.util.base.GsonUtil;
 import vip.jokor.im.wedgit.util.ShowUtil;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -101,8 +115,6 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
                                 int apply_status = jb.getInt("apply_status");
                                 data.setStatus(apply_status);
                                 notifyDataSetChanged();
-                                //这里需要发送推送消息
-                                ShowUtil.showToast(context,"该好友请求已处理过哦！");
                             }else{
                                 ShowUtil.showToast(context,"该好友请求已处理过哦！");
                             }
@@ -126,9 +138,77 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
                             R.menu.confirm_add,
                             item -> {
                                 switch (item.getItemId()){
-                                    case R.id.add: FriendPresenter.getInstance().through(context,data,AppliesBean.StatusAgree,callback);
-                                    case R.id.refuse:FriendPresenter.getInstance().through(context,data,AppliesBean.StatusRefuse,callback);
-                                    case R.id.ignore:FriendPresenter.getInstance().through(context,data,AppliesBean.StatusIgnore,callback);
+                                    case R.id.add:
+                                        //这里要先验证该用户是否是好友
+                                        View contentView = LayoutInflater.from(context).inflate(R.layout.pop_agree_add_friend,null);
+                                        Spinner type = contentView.findViewById(R.id.type);
+                                        type.setVisibility(View.VISIBLE);
+                                        String[] strSpinnerItems = new String[Datas.getFriendBean().getCategorys().size()];
+                                        for (int j=0;j<5;j++){
+                                            strSpinnerItems[j]=Datas.getFriendBean().getCategorys().get(j).getName();
+                                        }
+                                        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(context,R.layout.appoint_select,strSpinnerItems);
+                                        spinnerAdapter.setDropDownViewResource(R.layout.appoint_item);
+                                        type.setAdapter(spinnerAdapter);
+                                        type.setSelection(1);
+                                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
+                                        android.app.AlertDialog dialog = builder.setTitle("添加好友")
+                                                .setView(contentView)
+                                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        HttpCallback callback1 = new HttpCallback() {
+                                                            @Override
+                                                            public void onSuccess(String t) {
+                                                                Log.e(TAG, "addFriend onSuccess: "+t );
+                                                                try {
+                                                                    JSONObject jb = new JSONObject(t);
+                                                                    int status = jb.getInt("status");
+                                                                    if (status == 200){
+                                                                        int apply_status = jb.getInt("apply_status");
+                                                                        data.setStatus(apply_status);
+                                                                        notifyDataSetChanged();
+                                                                        ShowUtil.showToast(context,"添加好友成功");
+                                                                        //在这里需要更新UI界面
+                                                                        FriendsBean friendsBean = GsonUtil.getGson().fromJson(jb.getString("new_friend"),FriendsBean.class);
+                                                                        Datas.getFriendBean().getFriends().add(friendsBean);
+                                                                        EventBus.getDefault().postSticky(new FriendEvent(TAG,friendsBean));
+                                                                        //向对方推送添加好友请求
+                                                                        Msg msg = new Msg();
+                                                                        msg.setMsgUsed(Msg.MSG_USED_ADD_FRIEND);
+                                                                        msg.setMsgFrom(Msg.MSG_FROM_FRIEND);
+                                                                        msg.setFromId(Datas.getUserInfo().getId());
+                                                                        msg.setToId(data.getUserId());
+                                                                        msg.setUsername(Datas.getUserInfo().getUserName());
+                                                                        MsgEvent msgEvent = new MsgEvent(TAG,msg);
+                                                                        EventBus.getDefault().postSticky(msgEvent);
+//                                                                        //打开会话
+                                                                        MainPresenter.getInstance().openP2PSession(friendsBean,context,true);
+                                                                    }else {
+                                                                        ShowUtil.showToast(context,"该好友已经是您的好友了哦");
+                                                                    }
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(VolleyError error) {
+                                                                Log.e(TAG, "onFailure: "+error.getMessage() );
+                                                            }
+                                                        };
+                                                        FriendPresenter.getInstance().through(Datas.getFriendBean().getCategorys().get((int) type.getSelectedItemId()).getId(),data.getId(),AppliesBean.StatusAgree,callback1);
+                                                    }
+                                                })
+                                                .create();
+                                        dialog.show();
+                                        break;
+                                    case R.id.refuse:
+                                        FriendPresenter.getInstance().through(0,data.getId(),AppliesBean.StatusRefuse,callback);
+                                        break;
+                                    case R.id.ignore:
+                                        FriendPresenter.getInstance().through(0,data.getId(),AppliesBean.StatusIgnore,callback);
+                                        break;
                                 }
                                 return true;
                             },

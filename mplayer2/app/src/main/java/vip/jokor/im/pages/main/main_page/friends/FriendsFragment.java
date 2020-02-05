@@ -241,19 +241,21 @@ public class FriendsFragment extends Fragment {
 				boolean flag = false;
 				int categoryIndex = -1;
 				for (int i=0;i<datas.size();i++){
-					FirstNode firstNode = (FirstNode) datas.get(i);
-					//找出分类索引
-					if (firstNode.categorysBean.getId() == event.friendsBean.getCategoryId())categoryIndex = i;
-					//判断是否已经是好友
-					for (int j=0;j<firstNode.friends.size();j++){
-						FriendsBean secondNode = (FriendsBean) firstNode.friends.get(j);
-						if (secondNode.getFriend().getId() == event.friendsBean.getFriend().getId()){
-							flag = true;
+					if (datas instanceof FirstNode){
+						FirstNode firstNode = (FirstNode) datas.get(i);
+						//找出分类索引
+						if (firstNode.categorysBean.getId() == event.friendsBean.getCategoryId())categoryIndex = i;
+						//判断是否已经是好友
+						for (int j=0;j<firstNode.friends.size();j++){
+							FriendsBean secondNode = (FriendsBean) firstNode.friends.get(j);
+							if (secondNode.getFriend().getId() == event.friendsBean.getFriend().getId()){
+								flag = true;
+								break;
+							}
+						}
+						if (flag){
 							break;
 						}
-					}
-					if (flag){
-						break;
 					}
 				}
 				//如果好友列表里面没有这个好友，那么添加到好友列表

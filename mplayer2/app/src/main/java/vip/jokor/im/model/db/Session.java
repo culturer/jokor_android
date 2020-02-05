@@ -16,7 +16,7 @@ import static vip.jokor.im.model.db.Msg.MSG_FROM_GROUP;
 @Entity
 public class Session {
 
-    @Id(assignable = true)
+    @Id
     private long Id;            //编号
     private int Sort;           //排序
     private long Belong;        //用户编号
